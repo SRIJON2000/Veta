@@ -5,6 +5,7 @@ import 'package:veta/util/my_tile.dart';
 import 'dart:async';
 
 import 'package:veta/screens/book_appointment.dart';
+import 'package:veta/screens/doctor_details.dart';
 
 class MobileScaffold extends StatefulWidget {
   const MobileScaffold({Key? key}) : super(key: key);
@@ -72,7 +73,13 @@ class _MobileScaffoldState extends State<MobileScaffold> {
                         padding:
                             EdgeInsets.all(30) //content padding inside button
                         ),
-                    onPressed: null,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => DoctorDetails()),
+                      );
+                    },
                     child: Text("Search For Doctor"),
                   ),
                 ),
