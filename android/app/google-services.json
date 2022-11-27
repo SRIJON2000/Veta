@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "906870585820",
+    "project_id": "veta-22523",
+    "storage_bucket": "veta-22523.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:906870585820:android:d544ce34d6779352123719",
+        "android_client_info": {
+          "package_name": "com.example.veta"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "906870585820-39hstkmtcvlfrqshn68u08eqirt86u2d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiZuyQdla3rfYSrKoPjetGAD461nS1Pzw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "906870585820-39hstkmtcvlfrqshn68u08eqirt86u2d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
