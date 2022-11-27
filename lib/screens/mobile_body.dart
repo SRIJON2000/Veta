@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:veta/constants.dart';
+import 'package:veta/screens/petcare_form.dart';
 import 'package:veta/util/my_box.dart';
 import 'package:veta/util/my_tile.dart';
 import 'dart:async';
 
 import 'package:veta/screens/book_appointment.dart';
 import 'package:veta/screens/doctor_details.dart';
+import 'package:veta/screens/petcare_form.dart';
 
 class MobileScaffold extends StatefulWidget {
   const MobileScaffold({Key? key}) : super(key: key);
@@ -27,7 +29,7 @@ class _MobileScaffoldState extends State<MobileScaffold> {
           children: [
             Expanded(
               child: Container(
-                color: Color.fromARGB(255, 185, 90, 90),
+                color: Colors.deepPurple,
                 child: Center(
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -35,8 +37,7 @@ class _MobileScaffoldState extends State<MobileScaffold> {
                             255, 152, 37, 37), //background color of button
                         side: BorderSide(
                             width: 3,
-                            color: Color.fromARGB(
-                                255, 88, 105, 163)), //border width and color
+                            color: Colors.deepPurple), //border width and color
                         elevation: 6, //elevation of button
                         shape: RoundedRectangleBorder(
                             //to set border radius to button
@@ -56,16 +57,18 @@ class _MobileScaffoldState extends State<MobileScaffold> {
                 ),
               ),
             ),
+            SizedBox(height: 10),
             Expanded(
               child: Container(
-                color: Color.fromARGB(255, 189, 187, 187),
+                color: Colors.deepPurple,
                 child: Center(
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        primary: Colors.redAccent, //background color of button
+                        primary: Color.fromARGB(
+                            255, 152, 37, 37), //background color of button
                         side: BorderSide(
                             width: 3,
-                            color: Colors.brown), //border width and color
+                            color: Colors.deepPurple), //border width and color
                         elevation: 6, //elevation of button
                         shape: RoundedRectangleBorder(
                             //to set border radius to button
@@ -85,16 +88,18 @@ class _MobileScaffoldState extends State<MobileScaffold> {
                 ),
               ),
             ),
+            SizedBox(height: 10),
             Expanded(
               child: Container(
-                color: Color.fromARGB(255, 189, 187, 187),
+                color: Colors.deepPurple,
                 child: Center(
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        primary: Colors.redAccent, //background color of button
+                        primary: Color.fromARGB(
+                            255, 152, 37, 37), //background color of button
                         side: BorderSide(
                             width: 3,
-                            color: Colors.brown), //border width and color
+                            color: Colors.deepPurple), //border width and color
                         elevation: 6, //elevation of button
                         shape: RoundedRectangleBorder(
                             //to set border radius to button
@@ -102,22 +107,29 @@ class _MobileScaffoldState extends State<MobileScaffold> {
                         padding:
                             EdgeInsets.all(30) //content padding inside button
                         ),
-                    onPressed: null,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => PetCareForm()),
+                      );
+                    },
                     child: Text("Book Petcare Personnel"),
                   ),
                 ),
               ),
             ),
+            SizedBox(height: 10),
             Expanded(
               child: Container(
-                color: Color.fromARGB(255, 189, 187, 187),
+                color: Colors.deepPurple,
                 child: Center(
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        primary: Colors.redAccent, //background color of button
+                        primary: Color.fromARGB(
+                            255, 152, 37, 37), //background color of button
                         side: BorderSide(
                             width: 3,
-                            color: Colors.brown), //border width and color
+                            color: Colors.deepPurple), //border width and color
                         elevation: 6, //elevation of button
                         shape: RoundedRectangleBorder(
                             //to set border radius to button
@@ -131,6 +143,7 @@ class _MobileScaffoldState extends State<MobileScaffold> {
                 ),
               ),
             ),
+            SizedBox(height: 10),
           ],
         )));
   }

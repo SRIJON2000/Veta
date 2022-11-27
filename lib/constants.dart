@@ -22,8 +22,7 @@ var myDrawer = Drawer(
   elevation: 0,
   child: Column(
     children: [
-      DrawerHeader(
-          child: ImageIcon(AssetImage('assets/images/logo.png'), size: 160)),
+      DrawerHeader(child: ImageIcon(AssetImage('images/logo.png'), size: 260)),
       Padding(
         padding: tilePadding,
         child: ListTile(
@@ -57,27 +56,25 @@ var myDrawer = Drawer(
         child: ListTile(
           leading: Icon(Icons.settings),
           title: Text(
-            'M Y  B O O K I N G S',
+            'M Y  A P P O I N T M E N T S',
             style: drawerTextColor,
           ),
-          onTap: () {
-            FirebaseAuth.instance.signOut();
-          },
+          onTap: () {},
         ),
       ),
-      Padding(
-        padding: tilePadding,
-        child: ListTile(
-          leading: Icon(Icons.info),
-          title: Text(
-            'S E T T I N G S',
-            style: drawerTextColor,
-          ),
-          onTap: () {
-            FirebaseAuth.instance.signOut();
-          },
-        ),
-      ),
+      // Padding(
+      //   padding: tilePadding,
+      //   child: ListTile(
+      //     leading: Icon(Icons.info),
+      //     title: Text(
+      //       'S E T T I N G S',
+      //       style: drawerTextColor,
+      //     ),
+      //     onTap: () {
+      //       FirebaseAuth.instance.signOut();
+      //     },
+      //   ),
+      // ),
       Padding(
         padding: tilePadding,
         child: ListTile(

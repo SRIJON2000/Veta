@@ -40,17 +40,20 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                     height: 217,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
-                      color: Colors.deepPurple,
+                      color: Color.fromARGB(255, 22, 20, 18),
                     ),
                     child: Column(
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            "Hello",
+                            "Doctor Name: " +
+                                snap['firstname'].toString() +
+                                " " +
+                                snap['lastname'].toString(),
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 14,
+                              fontSize: 24,
                             ),
                           ),
                         ),
@@ -58,30 +61,31 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            "License Number: ",
+                            "License Number: " +
+                                snap['licenseNumber'].toString(),
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 14,
+                              fontSize: 24,
                             ),
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            "Phone Number: ",
+                            "Phone Number: " + snap['phoneNumber'].toString(),
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 14,
+                              fontSize: 24,
                             ),
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            "Speciality: ",
+                            "Speciality: " + snap['speciality'].toString(),
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 14,
+                              fontSize: 24,
                             ),
                           ),
                         ),

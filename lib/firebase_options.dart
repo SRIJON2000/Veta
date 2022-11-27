@@ -44,16 +44,16 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCHrYTWqRnpfbQ6WSFJHuRfM4j8rCvI1Dg',
-    appId: '1:512851274229:web:678409048dbffd5b6458bc',
-    messagingSenderId: '512851274229',
-    projectId: 'quick-shift-5657c',
-    authDomain: 'quick-shift-5657c.firebaseapp.com',
-    storageBucket: 'quick-shift-5657c.appspot.com',
+    apiKey: 'AIzaSyAiZuyQdla3rfYSrKoPjetGAD461nS1Pzw',
+    appId: '1:906870585820:android:d544ce34d6779352123719',
+    messagingSenderId: '906870585820',
+    projectId: 'veta-22523',
+    authDomain: 'veta-22523.firebaseapp.com',
+    storageBucket: 'veta-22523.appspot.com',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDgrmohmbX-11sUHFObkFvjLMjhERSxRNM',
+    apiKey: 'AIzaSyAiZuyQdla3rfYSrKoPjetGAD461nS1Pzw',
     appId: '1:906870585820:android:d544ce34d6779352123719',
     messagingSenderId: '906870585820',
     projectId: 'veta-22523',

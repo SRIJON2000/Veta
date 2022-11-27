@@ -76,7 +76,7 @@ class _SignInScreenState extends State<SignInScreen> {
               children: [
                 // Quick Shift Logo here
                 Image.asset(
-                  "assets/images/logo.png",
+                  "images/logo.png",
                   height: 250,
                   width: 250,
                 ),

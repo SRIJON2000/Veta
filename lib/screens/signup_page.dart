@@ -54,6 +54,10 @@ class _RegisterPageState extends State<RegisterPage> {
     _emailController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
+    _fnameController.dispose();
+    _lnameController.dispose();
+    _phoneController.dispose();
+    _licenseNoController.dispose();
 
     super.dispose();
   }
@@ -65,41 +69,23 @@ class _RegisterPageState extends State<RegisterPage> {
         _formPhoneValidatorKey.currentState!.validate() &&
         _formPasswordValidatorKey.currentState!.validate() &&
         _formTypeValidatorKey.currentState!.validate()) {
-      if (selectedRegtype == "User") {
-        if (passwordConfirmed()) {
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
-            email: _emailController.text.trim(),
-            password: _passwordController.text.trim(),
-          );
+      if (passwordConfirmed()) {
+        // Create User
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: _emailController.text.trim(),
+          password: _passwordController.text.trim(),
+        );
+
+        //add_userType();
+
+        // Add User Details
+        if (selectedRegtype == "User") {
           addUserDetails();
-        }
-      }
-      if (selectedRegtype == "Doctor") {
-        if (_formLicenseNumberKey.currentState!.validate() &&
-            _formSpecialityKey.currentState!.validate()) {
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
-            email: _emailController.text.trim(),
-            password: _passwordController.text.trim(),
-          );
+        } else {
+          // Add Driver Details
           addDoctorDetails();
         }
       }
-
-      // if (passwordConfirmed()) {
-      //   // Create User
-      //   await FirebaseAuth.instance.createUserWithEmailAndPassword(
-      //     email: _emailController.text.trim(),
-      //     password: _passwordController.text.trim(),
-      //   );
-
-      //   // Add User Details
-      //   if (selectedRegtype == "User") {
-      //     addUserDetails();
-      //   } else {
-      //     // Add Driver Details
-      //     addDriverDetails();
-      //   }
-      // }
     }
   }
 
