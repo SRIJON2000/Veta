@@ -76,7 +76,7 @@ class _RegisterPageState extends State<RegisterPage> {
           password: _passwordController.text.trim(),
         );
 
-        //add_userType();
+        add_userType();
 
         // Add User Details
         if (selectedRegtype == "User") {
@@ -116,6 +116,13 @@ class _RegisterPageState extends State<RegisterPage> {
     } else {
       return false;
     }
+  }
+
+  Future add_userType() async {
+    await FirebaseFirestore.instance.collection('userType').add({
+      'email': _emailController.text.trim(),
+      'type': selectedRegtype,
+    });
   }
 
   @override

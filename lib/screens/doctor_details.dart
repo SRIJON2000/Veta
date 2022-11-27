@@ -21,7 +21,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.grey[900],
-        title: Text('WELCOME ${user!.email!}'),
+        title: Text('Our Doctors'),
         centerTitle: false,
       ),
       backgroundColor: defaultBackgroundColor,
@@ -40,7 +40,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                     height: 217,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
-                      color: Color.fromARGB(255, 22, 20, 18),
+                      color: Color.fromARGB(255, 62, 20, 211),
                     ),
                     child: Column(
                       children: [
