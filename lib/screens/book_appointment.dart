@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:veta/constants.dart';
 import 'package:veta/util/my_box.dart';
@@ -64,7 +65,7 @@ class _BookAppointmentState extends State<BookAppointment> {
       backgroundColor: Colors.grey[300],
       appBar: AppBar(
         title: Text("Appointment Booking"),
-        backgroundColor: Colors.redAccent, //background color of app bar
+        backgroundColor: Colors.black54, //background color of app bar
       ),
       body: SafeArea(
         child: Center(
