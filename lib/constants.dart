@@ -24,7 +24,8 @@ var myDrawer = Drawer(
   elevation: 0,
   child: Column(
     children: [
-      DrawerHeader(child: ImageIcon(AssetImage('images/logo.png'), size: 260)),
+      DrawerHeader(
+          child: ImageIcon(AssetImage('./assets/images/logo.png'), size: 260)),
       Padding(
         padding: tilePadding,
         child: ListTile(
