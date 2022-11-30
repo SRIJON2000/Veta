@@ -8,6 +8,7 @@ import 'package:veta/constants.dart';
 //import 'package:veta/screens/dataLoader_box.dart';
 import 'package:veta/screens/signin_page.dart';
 import 'package:flutter_session_manager/flutter_session_manager.dart';
+import 'package:veta/screens/global.dart';
 
 class SelectDoctor extends StatefulWidget {
   SelectDoctor({super.key});
@@ -35,7 +36,7 @@ class _SelectDoctorState extends State<SelectDoctor> {
               return Center(child: CircularProgressIndicator());
             }
             return ListView(
-              children: snapshot.data!.docs.map((snap) {
+              children: snapshot.data!.docs.map((DocumentSnapshot snap) {
                 return Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: Container(
@@ -110,12 +111,10 @@ class _SelectDoctorState extends State<SelectDoctor> {
                                     30) //content padding inside button
                                 ),
                             onPressed: () async {
-                              //await SessionManager().remove("doctor");
-                              await session.set(
-                                  "doctor",
-                                  snap['firstname'].toString() +
-                                      " " +
-                                      snap['lastname'].toString());
+                              // s = snap['firstname'].toString() +
+                              //     " " +
+                              //     snap['lastname'].toString();
+                              s = snap.id;
                               Navigator.pop(context, 'Hello');
                             },
                             child: Text("Select"),

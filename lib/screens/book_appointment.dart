@@ -11,6 +11,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:veta/screens/select_doctor.dart';
 import 'package:flutter_session_manager/flutter_session_manager.dart';
+import 'package:veta/screens/global.dart';
 
 class BookAppointment extends StatefulWidget {
   const BookAppointment({Key? key}) : super(key: key);
@@ -30,6 +31,7 @@ class _BookAppointmentState extends State<BookAppointment> {
   final _formTimeKey = GlobalKey<FormState>();
   final _formPetKey = GlobalKey<FormState>();
   final _formDoctorKey = GlobalKey<FormState>();
+  final _formEmergencyKey = GlobalKey<FormState>();
 
   final List<String> pet = [
     'Dog',
@@ -41,24 +43,84 @@ class _BookAppointmentState extends State<BookAppointment> {
     'Goat'
   ];
 
-  String? selectedPet;
-  String? selectedDoctor;
+  final List<String> emergency = ['Yes', 'No'];
 
-  // Future<String> getdoc() async {
-  //   final String result = await Navigator.push(
-  //     context,
-  //     // Create the SelectionScreen in the next step.
-  //     MaterialPageRoute(builder: (context) => SelectDoctor()),
-  //   );
-  //   return result;
-  // }
+  String? selectedPet;
+  //String? selectedDoctor;
+  String? selectedEmergency;
+
+  String userid = "";
+
+  Future getdoc() async {
+    doctor.text = s;
+  }
+
+  Future book() async {
+    if (_formDateKey.currentState!.validate() &&
+        _formTimeKey.currentState!.validate() &&
+        _formPetKey.currentState!.validate() &&
+        _formDoctorKey.currentState!.validate() &&
+        _formEmergencyKey.currentState!.validate()) {
+      //getuserid();
+      loadAppointmentRequest();
+    }
+  }
+
+  Future loadAppointmentRequest() async {
+    await FirebaseFirestore.instance.collection('requests').add({
+      'date': "${_datetime.day} / ${_datetime.month} / ${_datetime.year}",
+      'doctorid': doctor.text.trim(),
+      'pet_type': selectedPet,
+      'prefer_date': "null",
+      'prefer_time': "null",
+      'status': "Not Approved",
+      'time': timeInput.text.trim(),
+      'userid': userid,
+    });
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+            content: Text(
+          "Your Appointment Request Has Been Sent To The Doctor, Kindly check My Appointments For Doctor's Reply",
+          textAlign: TextAlign.center,
+        ));
+      },
+    );
+  }
+
+  Future getuserid() async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .where('email', isEqualTo: user!.email)
+        .get()
+        .then((QuerySnapshot results) async {
+      userid = results.docs[0].id;
+    });
+  }
+
+  DateTime _datetime = DateTime.now();
+  void _showDatePicker() {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2030),
+    ).then((value) {
+      setState(() {
+        _datetime = value!;
+        dateInput.text = DateFormat('yyyy-MM-dd').format(_datetime);
+      });
+    });
+  }
 
   @override
   void initState() {
     dateInput.text = "";
     timeInput.text = ""; //set the initial value of text field
-    doctor.text = "";
+    getuserid();
     super.initState();
+    s = "";
   }
 
   @override
@@ -97,27 +159,28 @@ class _BookAppointmentState extends State<BookAppointment> {
                     key: _formDateKey,
                     child: TextFormField(
                       controller: dateInput,
-                      onTap: () async {
-                        DateTime? pickedDate = await showDatePicker(
-                            context: context,
-                            initialDate: DateTime.now(),
-                            firstDate: DateTime(1950),
-                            //DateTime.now() - not to allow to choose before today.
-                            lastDate: DateTime(2100));
+                      onTap: _showDatePicker,
+                      //onTap: () async {
+                      //   DateTime? pickedDate = await showDatePicker(
+                      //       context: context,
+                      //       initialDate: DateTime.now(),
+                      //       firstDate: DateTime(1950),
+                      //       //DateTime.now() - not to allow to choose before today.
+                      //       lastDate: DateTime(2100));
 
-                        if (pickedDate != null) {
-                          print(
-                              pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                          String formattedDate =
-                              DateFormat('yyyy-MM-dd').format(pickedDate);
-                          print(
-                              formattedDate); //formatted date output using intl package =>  2021-03-16
-                          setState(() {
-                            dateInput.text =
-                                formattedDate; //set output date to TextField value.
-                          });
-                        } else {}
-                      },
+                      //   if (pickedDate != null) {
+                      //     print(
+                      //         pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                      //     String formattedDate =
+                      //         DateFormat('yyyy-MM-dd').format(pickedDate);
+                      //     print(
+                      //         formattedDate); //formatted date output using intl package =>  2021-03-16
+                      //     setState(() {
+                      //       dateInput.text =
+                      //           formattedDate; //set output date to TextField value.
+                      //     });
+                      //   } else {}
+                      // },
                       decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.white),
@@ -133,8 +196,8 @@ class _BookAppointmentState extends State<BookAppointment> {
                         fillColor: Colors.grey[200],
                         filled: true,
                       ),
-                      validator: (fname) {
-                        if (fname == null || fname.isEmpty) {
+                      validator: (date) {
+                        if (date == null || date.isEmpty) {
                           return 'Please enter date';
                         }
                         return null;
@@ -190,8 +253,8 @@ class _BookAppointmentState extends State<BookAppointment> {
                         fillColor: Colors.grey[200],
                         filled: true,
                       ),
-                      validator: (fname) {
-                        if (fname == null || fname.isEmpty) {
+                      validator: (time) {
+                        if (time == null || time.isEmpty) {
                           return 'Please enter time';
                         }
                         return null;
@@ -245,6 +308,12 @@ class _BookAppointmentState extends State<BookAppointment> {
                       onSaved: (value) {
                         selectedPet = value.toString();
                       },
+                      validator: (pet) {
+                        if (pet == null || pet.isEmpty) {
+                          return 'Please select pet';
+                        }
+                        return null;
+                      },
                     ),
                   ),
                 ),
@@ -264,13 +333,7 @@ class _BookAppointmentState extends State<BookAppointment> {
                           MaterialPageRoute(
                               builder: (context) => SelectDoctor()),
                         );
-                        // setState(() async {
-                        //   doctor.text = await SessionManager().get("doctor");
-                        //   await SessionManager().remove("doctor");
-                        //   //print(s);
-                        // });
-                        doctor.text = await SessionManager().get("doctor");
-                        //await SessionManager().remove("doctor");
+                        await getdoc();
                       },
                       decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
@@ -286,9 +349,64 @@ class _BookAppointmentState extends State<BookAppointment> {
                         fillColor: Colors.grey[200],
                         filled: true,
                       ),
-                      validator: (lname) {
-                        if (lname == null || lname.isEmpty) {
-                          return 'Please enter your Last Name';
+                      validator: (doctor) {
+                        if (doctor == null || doctor.isEmpty) {
+                          return 'Please select doctor';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Form(
+                    key: _formEmergencyKey,
+                    child: DropdownButtonFormField2(
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.deepPurple),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        contentPadding: EdgeInsets.all(20.0),
+                        hintText: 'Emergency or not',
+                        fillColor: Colors.grey[200],
+                        filled: true,
+                      ),
+                      icon: const Icon(
+                        Icons.arrow_drop_down,
+                        color: Colors.black45,
+                      ),
+                      buttonPadding: const EdgeInsets.only(left: 20, right: 10),
+                      dropdownDecoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      items: emergency
+                          .map((item) => DropdownMenuItem<String>(
+                                value: item,
+                                child: Text(
+                                  item,
+                                ),
+                              ))
+                          .toList(),
+                      onChanged: (value) {
+                        // Do Smoething here
+                        setState(() {
+                          selectedEmergency = value.toString();
+                        });
+                      },
+                      onSaved: (value) {
+                        selectedEmergency = value.toString();
+                      },
+                      validator: (emergency) {
+                        if (emergency == null || emergency.isEmpty) {
+                          return 'Please Emergency or not';
                         }
                         return null;
                       },
@@ -349,7 +467,7 @@ class _BookAppointmentState extends State<BookAppointment> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: GestureDetector(
-                    onTap: null,
+                    onTap: book,
                     child: Container(
                       padding: EdgeInsets.all(20),
                       decoration: BoxDecoration(

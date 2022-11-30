@@ -93,6 +93,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Future addUserDetails() async {
     await FirebaseFirestore.instance.collection('users').add({
+      'email': _emailController.text.trim(),
       'firstname': _fnameController.text.trim(),
       'lastname': _lnameController.text.trim(),
       'phoneNumber': _phoneController.text.trim(),
@@ -101,6 +102,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Future addDoctorDetails() async {
     await FirebaseFirestore.instance.collection('doctors').add({
+      'email': _emailController.text.trim(),
       'firstname': _fnameController.text.trim(),
       'lastname': _lnameController.text.trim(),
       'phoneNumber': _phoneController.text.trim(),
