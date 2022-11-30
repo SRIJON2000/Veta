@@ -9,6 +9,8 @@ import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:veta/screens/select_doctor.dart';
+import 'package:flutter_session_manager/flutter_session_manager.dart';
 
 class BookAppointment extends StatefulWidget {
   const BookAppointment({Key? key}) : super(key: key);
@@ -18,25 +20,16 @@ class BookAppointment extends StatefulWidget {
 }
 
 class _BookAppointmentState extends State<BookAppointment> {
+  var session = SessionManager();
+
   TextEditingController dateInput = TextEditingController();
   TextEditingController timeInput = TextEditingController();
+  TextEditingController doctor = TextEditingController();
 
   final _formDateKey = GlobalKey<FormState>();
   final _formTimeKey = GlobalKey<FormState>();
   final _formPetKey = GlobalKey<FormState>();
   final _formDoctorKey = GlobalKey<FormState>();
-
-  List<String> doctors = ['ABC', 'XYZ'];
-
-  Future getalldoc() async {
-    await FirebaseFirestore.instance
-        .collection('doctors')
-        .get()
-        .then((snapshot) => snapshot.docs.forEach(((document) {
-              print(document.reference);
-              doctors.add(document.reference.id);
-            })));
-  }
 
   final List<String> pet = [
     'Dog',
@@ -51,11 +44,20 @@ class _BookAppointmentState extends State<BookAppointment> {
   String? selectedPet;
   String? selectedDoctor;
 
+  // Future<String> getdoc() async {
+  //   final String result = await Navigator.push(
+  //     context,
+  //     // Create the SelectionScreen in the next step.
+  //     MaterialPageRoute(builder: (context) => SelectDoctor()),
+  //   );
+  //   return result;
+  // }
+
   @override
   void initState() {
     dateInput.text = "";
-    timeInput.text = "";
-    getalldoc(); //set the initial value of text field
+    timeInput.text = ""; //set the initial value of text field
+    doctor.text = "";
     super.initState();
   }
 
@@ -248,6 +250,51 @@ class _BookAppointmentState extends State<BookAppointment> {
                 ),
 
                 SizedBox(height: 10),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Form(
+                    key: _formDoctorKey,
+                    child: TextFormField(
+                      controller: doctor,
+                      onTap: () async {
+                        Navigator.push(
+                          context,
+                          // Create the SelectionScreen in the next step.
+                          MaterialPageRoute(
+                              builder: (context) => SelectDoctor()),
+                        );
+                        // setState(() async {
+                        //   doctor.text = await SessionManager().get("doctor");
+                        //   await SessionManager().remove("doctor");
+                        //   //print(s);
+                        // });
+                        doctor.text = await SessionManager().get("doctor");
+                        //await SessionManager().remove("doctor");
+                      },
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.deepPurple),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        hintText: 'Doctor Name',
+                        contentPadding: EdgeInsets.all(20.0),
+                        fillColor: Colors.grey[200],
+                        filled: true,
+                      ),
+                      validator: (lname) {
+                        if (lname == null || lname.isEmpty) {
+                          return 'Please enter your Last Name';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                ),
 
                 // Padding(
                 //   padding: const EdgeInsets.symmetric(horizontal: 25.0),
