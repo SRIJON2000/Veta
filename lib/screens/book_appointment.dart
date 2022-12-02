@@ -10,6 +10,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:veta/screens/select_doctor.dart';
+import 'package:veta/screens/mobile_body.dart';
 import 'package:flutter_session_manager/flutter_session_manager.dart';
 import 'package:veta/screens/global.dart';
 
@@ -70,6 +71,7 @@ class _BookAppointmentState extends State<BookAppointment> {
     await FirebaseFirestore.instance.collection('requests').add({
       'date': "${_datetime.day} / ${_datetime.month} / ${_datetime.year}",
       'doctorid': doctor.text.trim(),
+      'emergency': selectedEmergency,
       'pet_type': selectedPet,
       'prefer_date': "null",
       'prefer_time': "null",
@@ -87,6 +89,7 @@ class _BookAppointmentState extends State<BookAppointment> {
         ));
       },
     );
+    //const MobileScaffold();
   }
 
   Future getuserid() async {
