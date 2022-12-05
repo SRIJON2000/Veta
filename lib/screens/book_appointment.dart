@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:veta/constants.dart';
+import 'package:veta/screens/user_appointments.dart';
 import 'package:veta/util/my_box.dart';
 import 'package:veta/util/my_tile.dart';
 import 'dart:async';
@@ -27,12 +28,21 @@ class _BookAppointmentState extends State<BookAppointment> {
   TextEditingController dateInput = TextEditingController();
   TextEditingController timeInput = TextEditingController();
   TextEditingController doctor = TextEditingController();
+  TextEditingController breed = TextEditingController();
+  TextEditingController height = TextEditingController();
+  TextEditingController weight = TextEditingController();
+  TextEditingController age = TextEditingController();
 
   final _formDateKey = GlobalKey<FormState>();
   final _formTimeKey = GlobalKey<FormState>();
   final _formPetKey = GlobalKey<FormState>();
   final _formDoctorKey = GlobalKey<FormState>();
   final _formEmergencyKey = GlobalKey<FormState>();
+  final _formBreedKey = GlobalKey<FormState>();
+  final _formHeightKey = GlobalKey<FormState>();
+  final _formWeightKey = GlobalKey<FormState>();
+  final _formAgeKey = GlobalKey<FormState>();
+  final _formGenderKey = GlobalKey<FormState>();
 
   final List<String> pet = [
     'Dog',
@@ -45,10 +55,12 @@ class _BookAppointmentState extends State<BookAppointment> {
   ];
 
   final List<String> emergency = ['Yes', 'No'];
+  final List<String> gender = ['Male', 'Female'];
 
   String? selectedPet;
   //String? selectedDoctor;
   String? selectedEmergency;
+  String? selectedGender;
 
   String userid = "";
 
@@ -61,32 +73,67 @@ class _BookAppointmentState extends State<BookAppointment> {
         _formTimeKey.currentState!.validate() &&
         _formPetKey.currentState!.validate() &&
         _formDoctorKey.currentState!.validate() &&
-        _formEmergencyKey.currentState!.validate()) {
-      //getuserid();
+        _formEmergencyKey.currentState!.validate() &&
+        _formHeightKey.currentState!.validate() &&
+        _formWeightKey.currentState!.validate() &&
+        _formAgeKey.currentState!.validate() &&
+        _formGenderKey.currentState!.validate() &&
+        _formBreedKey.currentState!.validate()) {
       loadAppointmentRequest();
     }
   }
 
   Future loadAppointmentRequest() async {
     await FirebaseFirestore.instance.collection('requests').add({
+      'age': age.text.trim(),
+      'breed': breed.text.trim(),
       'date': "${_datetime.day} / ${_datetime.month} / ${_datetime.year}",
       'doctorid': doctor.text.trim(),
       'emergency': selectedEmergency,
+      'gender': selectedGender,
+      'height': height.text.trim(),
       'pet_type': selectedPet,
       'prefer_date': "null",
       'prefer_time': "null",
-      'status': "Not Approved",
+      'status': "Pending",
       'time': timeInput.text.trim(),
-      'userid': userid,
+      'useremail': user!.email,
+      'weight': weight.text.trim(),
     });
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-            content: Text(
-          "Your Appointment Request Has Been Sent To The Doctor, Kindly check My Appointments For Doctor's Reply",
-          textAlign: TextAlign.center,
-        ));
+            content: Container(
+                height: 200,
+                child: Column(children: [
+                  Text(
+                    "Your Appointment Request Has Been Successfully Sent To The Doctor, Kindly check My Appointments For Further Update",
+                  ),
+                  SizedBox(height: 10),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.deepPurple, //background color of button
+                        side: BorderSide(
+                            width: 3,
+                            color: Colors.deepPurple), //border width and color
+                        elevation: 6, //elevation of button
+                        shape: RoundedRectangleBorder(
+                            //to set border radius to button
+                            borderRadius: BorderRadius.circular(30)),
+                        padding:
+                            EdgeInsets.all(30) //content padding inside button
+                        ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const UserAppointment()),
+                      );
+                    },
+                    child: Text("Go to my appointments"),
+                  ),
+                ])));
       },
     );
     //const MobileScaffold();
@@ -132,7 +179,7 @@ class _BookAppointmentState extends State<BookAppointment> {
       backgroundColor: Colors.grey[300],
       appBar: AppBar(
         title: Text("Appointment Booking"),
-        backgroundColor: Colors.black54, //background color of app bar
+        backgroundColor: Colors.grey[900], //background color of app bar
       ),
       body: SafeArea(
         child: Center(
@@ -158,32 +205,22 @@ class _BookAppointmentState extends State<BookAppointment> {
 
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Text("Appointment Details",
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(255, 19, 13, 200),
+                      )),
+                ),
+                SizedBox(height: 25),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: Form(
                     key: _formDateKey,
                     child: TextFormField(
                       controller: dateInput,
                       onTap: _showDatePicker,
-                      //onTap: () async {
-                      //   DateTime? pickedDate = await showDatePicker(
-                      //       context: context,
-                      //       initialDate: DateTime.now(),
-                      //       firstDate: DateTime(1950),
-                      //       //DateTime.now() - not to allow to choose before today.
-                      //       lastDate: DateTime(2100));
-
-                      //   if (pickedDate != null) {
-                      //     print(
-                      //         pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                      //     String formattedDate =
-                      //         DateFormat('yyyy-MM-dd').format(pickedDate);
-                      //     print(
-                      //         formattedDate); //formatted date output using intl package =>  2021-03-16
-                      //     setState(() {
-                      //       dateInput.text =
-                      //           formattedDate; //set output date to TextField value.
-                      //     });
-                      //   } else {}
-                      // },
                       decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.white),
@@ -207,6 +244,13 @@ class _BookAppointmentState extends State<BookAppointment> {
                       },
                     ),
                   ),
+                ),
+                SizedBox(height: 5),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Text(
+                      "This date is for your preference. Actual appointment date will be given by the doctor"),
                 ),
                 SizedBox(height: 10),
 
@@ -265,64 +309,13 @@ class _BookAppointmentState extends State<BookAppointment> {
                     ),
                   ),
                 ),
-                SizedBox(height: 10),
-
+                SizedBox(height: 5),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  child: Form(
-                    key: _formPetKey,
-                    child: DropdownButtonFormField2(
-                      decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.deepPurple),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        contentPadding: EdgeInsets.all(20.0),
-                        hintText: 'Select Pet',
-                        fillColor: Colors.grey[200],
-                        filled: true,
-                      ),
-                      icon: const Icon(
-                        Icons.arrow_drop_down,
-                        color: Colors.black45,
-                      ),
-                      buttonPadding: const EdgeInsets.only(left: 20, right: 10),
-                      dropdownDecoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      items: pet
-                          .map((item) => DropdownMenuItem<String>(
-                                value: item,
-                                child: Text(
-                                  item,
-                                ),
-                              ))
-                          .toList(),
-                      onChanged: (value) {
-                        // Do Smoething here
-                        setState(() {
-                          selectedPet = value.toString();
-                        });
-                      },
-                      onSaved: (value) {
-                        selectedPet = value.toString();
-                      },
-                      validator: (pet) {
-                        if (pet == null || pet.isEmpty) {
-                          return 'Please select pet';
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
+                  child: Text(
+                      "This time is for your preference. Actual appointment time will be given by the doctor"),
                 ),
-
                 SizedBox(height: 10),
-
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: Form(
@@ -416,6 +409,257 @@ class _BookAppointmentState extends State<BookAppointment> {
                     ),
                   ),
                 ),
+
+                SizedBox(height: 10),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Text("Pet Details",
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(255, 19, 13, 200),
+                      )),
+                ),
+
+                SizedBox(height: 10),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Form(
+                    key: _formPetKey,
+                    child: DropdownButtonFormField2(
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.deepPurple),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        contentPadding: EdgeInsets.all(20.0),
+                        hintText: 'Select Pet',
+                        fillColor: Colors.grey[200],
+                        filled: true,
+                      ),
+                      icon: const Icon(
+                        Icons.arrow_drop_down,
+                        color: Colors.black45,
+                      ),
+                      buttonPadding: const EdgeInsets.only(left: 20, right: 10),
+                      dropdownDecoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      items: pet
+                          .map((item) => DropdownMenuItem<String>(
+                                value: item,
+                                child: Text(
+                                  item,
+                                ),
+                              ))
+                          .toList(),
+                      onChanged: (value) {
+                        // Do Smoething here
+                        setState(() {
+                          selectedPet = value.toString();
+                        });
+                      },
+                      onSaved: (value) {
+                        selectedPet = value.toString();
+                      },
+                      validator: (pet) {
+                        if (pet == null || pet.isEmpty) {
+                          return 'Please select pet';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                ),
+
+                SizedBox(height: 10),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Form(
+                    key: _formBreedKey,
+                    child: TextFormField(
+                      controller: breed,
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.deepPurple),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        hintText: 'Enter breed name',
+                        contentPadding: EdgeInsets.all(20.0),
+                        fillColor: Colors.grey[200],
+                        filled: true,
+                      ),
+                      validator: (breed) {
+                        if (breed == null || breed.isEmpty) {
+                          return 'Please enter your breed name';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Form(
+                    key: _formHeightKey,
+                    child: TextFormField(
+                      controller: height,
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.deepPurple),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        hintText: 'Enter Height',
+                        contentPadding: EdgeInsets.all(20.0),
+                        fillColor: Colors.grey[200],
+                        filled: true,
+                      ),
+                      validator: (breed) {
+                        if (breed == null || breed.isEmpty) {
+                          return 'Please enter height';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Form(
+                    key: _formWeightKey,
+                    child: TextFormField(
+                      controller: weight,
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.deepPurple),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        hintText: 'Enter Weight',
+                        contentPadding: EdgeInsets.all(20.0),
+                        fillColor: Colors.grey[200],
+                        filled: true,
+                      ),
+                      validator: (breed) {
+                        if (breed == null || breed.isEmpty) {
+                          return 'Please enter weight';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Form(
+                    key: _formAgeKey,
+                    child: TextFormField(
+                      //keyboardType: TextInputType.number,
+                      controller: age,
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.deepPurple),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        hintText: 'Enter Age',
+                        contentPadding: EdgeInsets.all(20.0),
+                        fillColor: Colors.grey[200],
+                        filled: true,
+                      ),
+                      //keyboardType: TextInputType.number,
+                      validator: (breed) {
+                        if (breed == null || breed.isEmpty) {
+                          return 'Please enter age';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Form(
+                    key: _formGenderKey,
+                    child: DropdownButtonFormField2(
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.deepPurple),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        contentPadding: EdgeInsets.all(20.0),
+                        hintText: 'Select Gender',
+                        fillColor: Colors.grey[200],
+                        filled: true,
+                      ),
+                      icon: const Icon(
+                        Icons.arrow_drop_down,
+                        color: Colors.black45,
+                      ),
+                      buttonPadding: const EdgeInsets.only(left: 20, right: 10),
+                      dropdownDecoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      items: gender
+                          .map((item) => DropdownMenuItem<String>(
+                                value: item,
+                                child: Text(
+                                  item,
+                                ),
+                              ))
+                          .toList(),
+                      onChanged: (value) {
+                        // Do Smoething here
+                        setState(() {
+                          selectedGender = value.toString();
+                        });
+                      },
+                      onSaved: (value) {
+                        selectedGender = value.toString();
+                      },
+                      validator: (pet) {
+                        if (pet == null || pet.isEmpty) {
+                          return 'Please select gender';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10),
 
                 // Padding(
                 //   padding: const EdgeInsets.symmetric(horizontal: 25.0),

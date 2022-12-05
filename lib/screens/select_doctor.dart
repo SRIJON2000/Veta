@@ -114,7 +114,8 @@ class _SelectDoctorState extends State<SelectDoctor> {
                               // s = snap['firstname'].toString() +
                               //     " " +
                               //     snap['lastname'].toString();
-                              s = snap.id;
+                              //s = snap.id;
+                              s = snap['email'].toString();
                               Navigator.pop(context, 'Hello');
                             },
                             child: Text("Select"),

@@ -1,3 +1,5 @@
+import 'dart:js';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 //import 'package:url_launcher/url_launcher.dart';
@@ -5,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:veta/screens/auth_page.dart';
 import 'package:veta/screens/mobile_body.dart';
+import 'package:veta/screens/user_appointments.dart';
 
 final user = FirebaseAuth.instance.currentUser;
 var defaultBackgroundColor = Colors.grey[300];
@@ -57,13 +60,26 @@ var myDrawer = Drawer(
       Padding(
         padding: tilePadding,
         child: ListTile(
-          leading: Icon(Icons.settings),
-          title: Text(
-            'M Y  A P P O I N T M E N T S',
-            style: drawerTextColor,
-          ),
-          onTap: () {},
-        ),
+            leading: Icon(Icons.settings),
+            title: Text(
+              'M Y  A P P O I N T M E N T S',
+              style: drawerTextColor,
+            ),
+            onTap: () {
+              // Navigator.pushReplacement(context,MaterialPageRoute(builder: (BuildContext context) {
+              //   return const UserAppointment();
+              // }));
+              Widget build(BuildContext context) {
+                return Scaffold(
+                  body: StreamBuilder<User?>(
+                    stream: FirebaseAuth.instance.authStateChanges(),
+                    builder: (context, snapshot) {
+                      return const UserAppointment();
+                    },
+                  ),
+                );
+              }
+            }),
       ),
       // Padding(
       //   padding: tilePadding,

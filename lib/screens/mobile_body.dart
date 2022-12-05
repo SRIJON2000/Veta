@@ -4,10 +4,15 @@ import 'package:veta/screens/petcare_form.dart';
 import 'package:veta/util/my_box.dart';
 import 'package:veta/util/my_tile.dart';
 import 'dart:async';
-
+import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:veta/screens/book_appointment.dart';
 import 'package:veta/screens/doctor_details.dart';
 import 'package:veta/screens/petcare_form.dart';
+import 'package:veta/screens/user_appointments.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class MobileScaffold extends StatefulWidget {
   const MobileScaffold({Key? key}) : super(key: key);
@@ -22,7 +27,61 @@ class _MobileScaffoldState extends State<MobileScaffold> {
     return Scaffold(
         backgroundColor: defaultBackgroundColor,
         appBar: myAppBar,
-        drawer: myDrawer,
+        drawer: Drawer(
+          backgroundColor: Colors.grey[300],
+          child: Column(children: [
+            DrawerHeader(
+              child: ImageIcon(AssetImage('assets/images/logo.png'), size: 160),
+            ),
+            //child: ImageIcon(AssetImage('assets/images/logo.png'), size: 160)),
+            Padding(
+              padding: tilePadding,
+              child: ListTile(
+                leading: Icon(Icons.home),
+                title: Text(
+                  'D A S H B O A R D',
+                  style: drawerTextColor,
+                ),
+                onTap: (() {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (BuildContext context) {
+                    return const MobileScaffold();
+                  }));
+                }),
+              ),
+            ),
+            Padding(
+              padding: tilePadding,
+              child: ListTile(
+                leading: Icon(Icons.account_box),
+                title: Text(
+                  'M Y  A P P O I N T M E N T S',
+                  style: drawerTextColor,
+                ),
+                onTap: () {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (BuildContext context) {
+                    return UserAppointment();
+                  }));
+                },
+              ),
+            ),
+            Padding(
+              padding: tilePadding,
+              child: ListTile(
+                leading: Icon(Icons.logout),
+                title: Text(
+                  'L O G O U T',
+                  style: drawerTextColor,
+                ),
+                onTap: () async {
+                  await FirebaseAuth.instance.signOut();
+                  //Phoenix.rebirth(context);
+                },
+              ),
+            )
+          ]),
+        ),
         body: Center(
             child: Column(
           mainAxisSize: MainAxisSize.min,
