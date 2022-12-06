@@ -4,11 +4,11 @@ class MyBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.all(15),
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          color: Colors.grey[400],
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.grey[900],
         ),
       ),
     );

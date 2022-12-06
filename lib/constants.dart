@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 //import 'package:url_launcher/url_launcher.dart';
@@ -24,7 +26,8 @@ var myDrawer = Drawer(
   elevation: 0,
   child: Column(
     children: [
-      DrawerHeader(child: ImageIcon(AssetImage('images/logo.png'), size: 260)),
+      DrawerHeader(
+          child: ImageIcon(AssetImage('assets/images/logo.png'), size: 260)),
       Padding(
         padding: tilePadding,
         child: ListTile(
