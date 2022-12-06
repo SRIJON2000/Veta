@@ -11,6 +11,9 @@ import 'package:veta/screens/book_appointment.dart';
 import 'package:veta/screens/doctor_details.dart';
 import 'package:veta/screens/data_getter.dart';
 import 'package:veta/screens/petcare_form.dart';
+import 'package:veta/screens/user_notification.dart';
+import 'package:veta/screens/doctor_notification.dart';
+import 'package:veta/screens/notification_loader.dart';
 
 class DoctorScaffold extends StatefulWidget {
   const DoctorScaffold({Key? key}) : super(key: key);
@@ -24,7 +27,25 @@ class _DoctorScaffoldState extends State<DoctorScaffold> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: defaultBackgroundColor,
-        appBar: myAppBar,
+        appBar: AppBar(
+          backgroundColor: appBarColor,
+          title: Text('WELCOME ${user!.email!}'),
+          actions: [
+            IconButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (BuildContext context) {
+                  return NotificationLoader(
+                    userNotification: UserNotification(),
+                    doctorNotification: DoctorNotification(),
+                  );
+                }));
+              },
+              icon: const Icon(Icons.notifications),
+            )
+          ],
+          centerTitle: false,
+        ),
         drawer: Drawer(
           backgroundColor: Colors.grey[300],
           child: Column(children: [

@@ -13,6 +13,9 @@ import 'package:veta/screens/user_appointments.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:veta/screens/user_notification.dart';
+import 'package:veta/screens/doctor_notification.dart';
+import 'package:veta/screens/notification_loader.dart';
 
 class MobileScaffold extends StatefulWidget {
   const MobileScaffold({Key? key}) : super(key: key);
@@ -26,7 +29,25 @@ class _MobileScaffoldState extends State<MobileScaffold> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: defaultBackgroundColor,
-        appBar: myAppBar,
+        appBar: AppBar(
+          backgroundColor: appBarColor,
+          title: Text('WELCOME ${user!.email!}'),
+          actions: [
+            IconButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (BuildContext context) {
+                  return NotificationLoader(
+                    userNotification: UserNotification(),
+                    doctorNotification: DoctorNotification(),
+                  );
+                }));
+              },
+              icon: const Icon(Icons.notifications),
+            )
+          ],
+          centerTitle: false,
+        ),
         drawer: Drawer(
           backgroundColor: Colors.grey[300],
           child: Column(children: [

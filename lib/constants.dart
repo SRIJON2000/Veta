@@ -8,13 +8,63 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:veta/screens/auth_page.dart';
 import 'package:veta/screens/mobile_body.dart';
 import 'package:veta/screens/user_appointments.dart';
+// import 'package:veta/screens/notification_loader.dart';
+// import 'package:veta/screens/user_notification.dart';
+// import 'package:veta/screens/doctor_notification.dart';
 
 final user = FirebaseAuth.instance.currentUser;
+// String usertype = "";
+// String name = "";
+// Future gettype() async {
+//   await FirebaseFirestore.instance
+//       .collection('userType')
+//       .where('email', isEqualTo: user!.email)
+//       .get()
+//       .then((QuerySnapshot results) async {
+//     usertype = results.docs[0]['type'];
+//   });
+// }
+
+// Future loadname() async {
+//   if (usertype == "User") {
+//     await FirebaseFirestore.instance
+//         .collection('users')
+//         .where('email', isEqualTo: user!.email)
+//         .get()
+//         .then((QuerySnapshot results) async {
+//       name = results.docs[0]['firstname'].toString() +
+//           results.docs[0]['lastname'].toString();
+//     });
+//   } else {
+//     await FirebaseFirestore.instance
+//         .collection('doctors')
+//         .where('email', isEqualTo: user!.email)
+//         .get()
+//         .then((QuerySnapshot results) async {
+//       name = results.docs[0]['firstname'].toString() +
+//           results.docs[0]['lastname'].toString();
+//     });
+//   }
+// }
+
+// @override
+// void initState() {
+//   gettype();
+//   loadname();
+//   print(name);
+// }
+
 var defaultBackgroundColor = Colors.grey[300];
 var appBarColor = Colors.grey[900];
 var myAppBar = AppBar(
   backgroundColor: appBarColor,
   title: Text('WELCOME ${user!.email!}'),
+  actions: [
+    IconButton(
+      onPressed: () {},
+      icon: const Icon(Icons.notifications),
+    )
+  ],
   centerTitle: false,
 );
 var drawerTextColor = TextStyle(
