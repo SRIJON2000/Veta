@@ -18,7 +18,7 @@ Future getUser_info() async {
       .then((QuerySnapshot results) {
     user_firstname = results.docs[0]['firstname'];
     user_phoneNumber = results.docs[0]['phoneNumber'];
-    user_lastname = results.docs[0]['lastname'];
+    user_lastname = results.docs[0].id;
   });
 }
 
