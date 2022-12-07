@@ -46,3 +46,29 @@ Future getUser_type() async {
     type = results.docs[0]['type'];
   });
 }
+
+class Member {
+  String email = "";
+  String firstname = "";
+  String lastname = "";
+  String phoneNumber = "";
+  String isLoggedin = "";
+}
+
+class User extends Member {
+  void Signup() {}
+  void bookappointment() {}
+  void searchdoctor() {}
+  void bookpetcare() {}
+}
+
+class Doctor extends Member {
+  void Signup() {}
+  void approveappointment() {}
+  void providetime() {}
+  void checkappointmentrequest() {}
+}
+
+class Appointment {}
+
+class PetDetails {}
