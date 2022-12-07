@@ -466,7 +466,7 @@ class _AppointmentRequestState extends State<AppointmentRequest> {
                                         .collection('requests')
                                         .doc(snap.id)
                                         .update({
-                                      "status": "Upcoming",
+                                      "status": "Denied",
                                     });
                                     showDialog(
                                       context: context,

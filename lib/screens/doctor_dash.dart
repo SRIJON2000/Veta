@@ -3,6 +3,7 @@ import 'package:veta/constants.dart';
 import 'package:veta/screens/appointment_request.dart';
 import 'package:veta/screens/doctor_appointments.dart';
 import 'package:veta/screens/petcare_form.dart';
+import 'package:veta/screens/profile.dart';
 import 'package:veta/util/my_box.dart';
 import 'package:veta/util/my_tile.dart';
 import 'dart:async';
@@ -26,118 +27,161 @@ class _DoctorScaffoldState extends State<DoctorScaffold> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: defaultBackgroundColor,
-        appBar: AppBar(
-          backgroundColor: appBarColor,
-          title: Text('WELCOME ${user!.email!}'),
-          actions: [
-            IconButton(
-              onPressed: () {
-                Navigator.push(context,
+      backgroundColor: defaultBackgroundColor,
+      appBar: AppBar(
+        backgroundColor: appBarColor,
+        title: Text('WELCOME ${user!.email!}'),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.call),
+          ),
+          IconButton(
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (BuildContext context) {
+                return NotificationLoader(
+                  userNotification: UserNotification(),
+                  doctorNotification: DoctorNotification(),
+                );
+              }));
+            },
+            icon: const Icon(Icons.notifications),
+          ),
+          IconButton(
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (BuildContext context) {
+                return ProfilePage();
+              }));
+            },
+            icon: const Icon(Icons.person),
+          ),
+        ],
+        centerTitle: false,
+      ),
+      drawer: Drawer(
+        backgroundColor: Colors.grey[300],
+        child: Column(children: [
+          DrawerHeader(
+            child: ImageIcon(AssetImage('./assets/images/logo.png'), size: 160),
+          ),
+          //child: ImageIcon(AssetImage('assets/images/logo.png'), size: 160)),
+          Padding(
+            padding: tilePadding,
+            child: ListTile(
+              leading: Icon(Icons.home),
+              title: Text(
+                'D A S H B O A R D',
+                style: drawerTextColor,
+              ),
+              onTap: (() {
+                Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (BuildContext context) {
-                  return NotificationLoader(
-                    userNotification: UserNotification(),
-                    doctorNotification: DoctorNotification(),
-                  );
+                  return DoctorScaffold();
+                }));
+              }),
+            ),
+          ),
+          Padding(
+            padding: tilePadding,
+            child: ListTile(
+              leading: Icon(Icons.account_box),
+              title: Text(
+                'M Y  A P P O I N T M E N T S',
+                style: drawerTextColor,
+              ),
+              onTap: () {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (BuildContext context) {
+                  return const DoctorAppointment();
                 }));
               },
-              icon: const Icon(Icons.notifications),
-            )
-          ],
-          centerTitle: false,
-        ),
-        drawer: Drawer(
-          backgroundColor: Colors.grey[300],
-          child: Column(children: [
-            DrawerHeader(
-              child:
-                  ImageIcon(AssetImage('./assets/images/logo.png'), size: 160),
             ),
-            //child: ImageIcon(AssetImage('assets/images/logo.png'), size: 160)),
-            Padding(
-              padding: tilePadding,
-              child: ListTile(
-                leading: Icon(Icons.home),
-                title: Text(
-                  'D A S H B O A R D',
-                  style: drawerTextColor,
-                ),
-                onTap: (() {
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (BuildContext context) {
-                    return DoctorScaffold();
-                  }));
-                }),
+          ),
+          Padding(
+            padding: tilePadding,
+            child: ListTile(
+              leading: Icon(Icons.logout),
+              title: Text(
+                'L O G O U T',
+                style: drawerTextColor,
               ),
+              onTap: () async {
+                await FirebaseAuth.instance.signOut();
+                //Phoenix.rebirth(context);
+              },
             ),
-            Padding(
-              padding: tilePadding,
-              child: ListTile(
-                leading: Icon(Icons.account_box),
-                title: Text(
-                  'M Y  A P P O I N T M E N T S',
-                  style: drawerTextColor,
+          )
+        ]),
+      ),
+      body: GridView.count(
+        padding: EdgeInsets.only(top: 20),
+        mainAxisSpacing: 50,
+        crossAxisSpacing: 10,
+        crossAxisCount: 2,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            child: InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AppointmentRequest()),
+                );
+              },
+              child: Ink(
+                decoration: BoxDecoration(
+                  color: Colors.grey[900],
+                  borderRadius: BorderRadius.circular(12),
                 ),
-                onTap: () {
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (BuildContext context) {
-                    return const DoctorAppointment();
-                  }));
-                },
-              ),
-            ),
-            Padding(
-              padding: tilePadding,
-              child: ListTile(
-                leading: Icon(Icons.logout),
-                title: Text(
-                  'L O G O U T',
-                  style: drawerTextColor,
-                ),
-                onTap: () async {
-                  await FirebaseAuth.instance.signOut();
-                  //Phoenix.rebirth(context);
-                },
-              ),
-            )
-          ]),
-        ),
-        body: Center(
-            child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Expanded(
-              child: Container(
-                color: Colors.deepPurple,
-                child: Center(
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        primary: Color.fromARGB(
-                            255, 152, 37, 37), //background color of button
-                        side: BorderSide(
-                            width: 3,
-                            color: Colors.deepPurple), //border width and color
-                        elevation: 6, //elevation of button
-                        shape: RoundedRectangleBorder(
-                            //to set border radius to button
-                            borderRadius: BorderRadius.circular(30)),
-                        padding:
-                            EdgeInsets.all(30) //content padding inside button
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      "assets/images/medicalAppointment.png",
+                      height: 50,
+                      width: 50,
+                    ),
+                    SizedBox(height: 15),
+                    Text(
+                      "Appointment",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                      ),
+                    ),
+                    Text(
+                      "Requests",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Wrap(
+                      alignment: WrapAlignment.center,
+                      direction: Axis.horizontal,
+                      children: [
+                        Text(
+                          "Check Your Appointment Requests",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.white54,
+                            fontSize: 10,
+                          ),
                         ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => AppointmentRequest()),
-                      );
-                    },
-                    child: Text("Check Appointment Requests"),
-                  ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ),
-            SizedBox(height: 10),
-          ],
-        )));
+          ),
+        ],
+      ),
+    );
   }
 }

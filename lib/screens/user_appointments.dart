@@ -7,6 +7,7 @@ import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:veta/constants.dart';
 import 'package:veta/screens/mobile_body.dart';
+import 'package:veta/screens/data_getter.dart';
 
 class UserAppointment extends StatefulWidget {
   const UserAppointment({super.key});
@@ -16,29 +17,29 @@ class UserAppointment extends StatefulWidget {
 }
 
 class _UserAppointmentState extends State<UserAppointment> {
-  Future showpetdetails(pettype, height, weight, age, gender) async {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-            content: Container(
-                child: Column(
-          children: [
-            Text("Pet: " + pettype),
-            SizedBox(height: 10),
-            Text("Height: " + height),
-            SizedBox(height: 10),
-            Text("Weight: " + weight),
-            SizedBox(height: 10),
-            Text("Age: " + age),
-            SizedBox(height: 10),
-            Text("Gender: " + gender),
-            SizedBox(height: 10),
-          ],
-        )));
-      },
-    );
-  }
+  // Future showpetdetails(pettype, height, weight, age, gender) async {
+  //   showDialog(
+  //     context: context,
+  //     builder: (context) {
+  //       return AlertDialog(
+  //           content: Container(
+  //               child: Column(
+  //         children: [
+  //           Text("Pet: " + pettype),
+  //           SizedBox(height: 10),
+  //           Text("Height: " + height),
+  //           SizedBox(height: 10),
+  //           Text("Weight: " + weight),
+  //           SizedBox(height: 10),
+  //           Text("Age: " + age),
+  //           SizedBox(height: 10),
+  //           Text("Gender: " + gender),
+  //           SizedBox(height: 10),
+  //         ],
+  //       )));
+  //     },
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -141,7 +142,8 @@ class _UserAppointmentState extends State<UserAppointment> {
                         stream: FirebaseFirestore.instance
                             .collection('requests')
                             .where('useremail', isEqualTo: user!.email)
-                            .where('status', isEqualTo: "Pending")
+                            .where('status', whereIn: ["Pending", "Denied"])
+                            //.where('status', isEqualTo: "Denied")
                             //.orderBy('date', descending: true)
                             .snapshots(),
                         builder: (BuildContext context,
@@ -200,6 +202,11 @@ class _UserAppointmentState extends State<UserAppointment> {
                                                                         .toString()),
                                                                 SizedBox(
                                                                     height: 10),
+                                                                Text("Breed: " +
+                                                                    snap['breed']
+                                                                        .toString()),
+                                                                SizedBox(
+                                                                    height: 10),
                                                                 Text("Height: " +
                                                                     snap['height']
                                                                         .toString()),
@@ -239,6 +246,28 @@ class _UserAppointmentState extends State<UserAppointment> {
                                                         fontSize: 24.0,
                                                         color: Colors.white)),
                                               ))),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          "Doctor Name: " + snap["doctorname"],
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 24,
+                                          ),
+                                        ),
+                                      ),
+                                      if (snap["status"] == "Denied") ...[
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            "This appointment request\nhas been denied\nby doctor",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 24,
+                                            ),
+                                          ),
+                                        ),
+                                      ]
                                     ],
                                   ),
                                 ),
@@ -312,6 +341,11 @@ class _UserAppointmentState extends State<UserAppointment> {
                                                                         .toString()),
                                                                 SizedBox(
                                                                     height: 10),
+                                                                Text("Breed: " +
+                                                                    snap['breed']
+                                                                        .toString()),
+                                                                SizedBox(
+                                                                    height: 10),
                                                                 Text("Height: " +
                                                                     snap['height']
                                                                         .toString()),
@@ -351,6 +385,16 @@ class _UserAppointmentState extends State<UserAppointment> {
                                                         fontSize: 24.0,
                                                         color: Colors.white)),
                                               ))),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          "Doctor Name: " + snap["doctorname"],
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 24,
+                                          ),
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -424,6 +468,11 @@ class _UserAppointmentState extends State<UserAppointment> {
                                                                         .toString()),
                                                                 SizedBox(
                                                                     height: 10),
+                                                                Text("Breed: " +
+                                                                    snap['breed']
+                                                                        .toString()),
+                                                                SizedBox(
+                                                                    height: 10),
                                                                 Text("Height: " +
                                                                     snap['height']
                                                                         .toString()),
@@ -463,6 +512,16 @@ class _UserAppointmentState extends State<UserAppointment> {
                                                         fontSize: 24.0,
                                                         color: Colors.white)),
                                               ))),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          "Doctor Name: " + snap["doctorname"],
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 24,
+                                          ),
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),

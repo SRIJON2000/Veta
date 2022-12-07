@@ -4,14 +4,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:veta/constants.dart';
-//import 'package:veta/screens/DashboardPages/user_scaffold.dart';
-//import 'package:veta/screens/dataLoader_box.dart';
-import 'package:veta/screens/signin_page.dart';
+import 'package:veta/screens/book_appointment.dart';
 import 'package:flutter_session_manager/flutter_session_manager.dart';
 import 'package:veta/screens/global.dart';
 
 class SelectDoctor extends StatefulWidget {
-  SelectDoctor({super.key});
+  const SelectDoctor({super.key});
 
   @override
   State<SelectDoctor> createState() => _SelectDoctorState();
@@ -111,12 +109,11 @@ class _SelectDoctorState extends State<SelectDoctor> {
                                     30) //content padding inside button
                                 ),
                             onPressed: () async {
-                              // s = snap['firstname'].toString() +
-                              //     " " +
-                              //     snap['lastname'].toString();
-                              //s = snap.id;
-                              s = snap['email'].toString();
-                              Navigator.pop(context, 'Hello');
+                              doctorid = snap['email'].toString();
+                              doctorname = snap['firstname'].toString() +
+                                  " " +
+                                  snap['lastname'].toString();
+                              Navigator.pop(context);
                             },
                             child: Text("Select"),
                           ),

@@ -193,6 +193,11 @@ class _DoctorAppointmentState extends State<DoctorAppointment> {
                                                                         .toString()),
                                                                 SizedBox(
                                                                     height: 10),
+                                                                Text("Breed: " +
+                                                                    snap['breed']
+                                                                        .toString()),
+                                                                SizedBox(
+                                                                    height: 10),
                                                                 Text("Height: " +
                                                                     snap['height']
                                                                         .toString()),
@@ -232,6 +237,16 @@ class _DoctorAppointmentState extends State<DoctorAppointment> {
                                                         fontSize: 24.0,
                                                         color: Colors.white)),
                                               ))),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          "Name: " + snap['username'],
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 24,
+                                          ),
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -305,6 +320,11 @@ class _DoctorAppointmentState extends State<DoctorAppointment> {
                                                                         .toString()),
                                                                 SizedBox(
                                                                     height: 10),
+                                                                Text("Breed: " +
+                                                                    snap['breed']
+                                                                        .toString()),
+                                                                SizedBox(
+                                                                    height: 10),
                                                                 Text("Height: " +
                                                                     snap['height']
                                                                         .toString()),
@@ -344,6 +364,16 @@ class _DoctorAppointmentState extends State<DoctorAppointment> {
                                                         fontSize: 24.0,
                                                         color: Colors.white)),
                                               ))),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          "Name: " + snap['username'],
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 24,
+                                          ),
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),

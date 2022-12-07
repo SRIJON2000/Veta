@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:veta/constants.dart';
 
 import 'package:veta/screens/petcare_form.dart';
+import 'package:veta/screens/profile.dart';
 import 'package:veta/util/my_box.dart';
 import 'package:veta/util/my_tile.dart';
 import 'dart:async';
@@ -37,6 +38,10 @@ class _MobileScaffoldState extends State<MobileScaffold> {
         title: Text('WELCOME ${user!.email!}'),
         actions: [
           IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.call),
+          ),
+          IconButton(
             onPressed: () {
               Navigator.push(context,
                   MaterialPageRoute(builder: (BuildContext context) {
@@ -47,7 +52,16 @@ class _MobileScaffoldState extends State<MobileScaffold> {
               }));
             },
             icon: const Icon(Icons.notifications),
-          )
+          ),
+          IconButton(
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (BuildContext context) {
+                return ProfilePage();
+              }));
+            },
+            icon: const Icon(Icons.person),
+          ),
         ],
         centerTitle: false,
       ),

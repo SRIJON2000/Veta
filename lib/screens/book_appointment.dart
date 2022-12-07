@@ -23,8 +23,6 @@ class BookAppointment extends StatefulWidget {
 }
 
 class _BookAppointmentState extends State<BookAppointment> {
-  var session = SessionManager();
-
   TextEditingController dateInput = TextEditingController();
   TextEditingController timeInput = TextEditingController();
   TextEditingController doctor = TextEditingController();
@@ -58,15 +56,11 @@ class _BookAppointmentState extends State<BookAppointment> {
   final List<String> gender = ['Male', 'Female'];
 
   String? selectedPet;
-  //String? selectedDoctor;
   String? selectedEmergency;
   String? selectedGender;
 
   String userid = "";
-
-  Future getdoc() async {
-    doctor.text = s;
-  }
+  String username = "";
 
   Future book() async {
     if (_formDateKey.currentState!.validate() &&
@@ -88,7 +82,8 @@ class _BookAppointmentState extends State<BookAppointment> {
       'age': age.text.trim(),
       'breed': breed.text.trim(),
       'date': "${_datetime.day} / ${_datetime.month} / ${_datetime.year}",
-      'doctorid': doctor.text.trim(),
+      'doctorid': doctorid.trim(),
+      'doctorname': doctorname.trim(),
       'emergency': selectedEmergency,
       'gender': selectedGender,
       'height': height.text.trim(),
@@ -98,6 +93,7 @@ class _BookAppointmentState extends State<BookAppointment> {
       'status': "Pending",
       'time': timeInput.text.trim(),
       'useremail': user!.email,
+      'username': username.trim(),
       'weight': weight.text.trim(),
     });
     showDialog(
@@ -149,6 +145,18 @@ class _BookAppointmentState extends State<BookAppointment> {
     });
   }
 
+  Future getusername() async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .where('email', isEqualTo: user!.email)
+        .get()
+        .then((QuerySnapshot results) async {
+      username = results.docs[0]["firstname"].toString() +
+          " " +
+          results.docs[0]["lastname"].toString();
+    });
+  }
+
   DateTime _datetime = DateTime.now();
   void _showDatePicker() {
     showDatePicker(
@@ -169,8 +177,10 @@ class _BookAppointmentState extends State<BookAppointment> {
     dateInput.text = "";
     timeInput.text = ""; //set the initial value of text field
     getuserid();
+    getusername();
+    doctorname = "";
+    doctorid = "";
     super.initState();
-    s = "";
   }
 
   @override
@@ -209,7 +219,7 @@ class _BookAppointmentState extends State<BookAppointment> {
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(255, 19, 13, 200),
+                        color: Colors.deepPurple,
                       )),
                 ),
                 SizedBox(height: 25),
@@ -267,14 +277,14 @@ class _BookAppointmentState extends State<BookAppointment> {
                         );
 
                         if (pickedTime != null) {
-                          print(pickedTime.format(context)); //output 10:51 PM
+                          //print(pickedTime.format(context)); //output 10:51 PM
                           DateTime parsedTime = DateFormat.jm()
                               .parse(pickedTime.format(context).toString());
                           //converting to DateTime so that we can further format on different pattern.
-                          print(parsedTime); //output 1970-01-01 22:53:00.000
+                          //print(parsedTime); //output 1970-01-01 22:53:00.000
                           String formattedTime =
                               DateFormat('HH:mm:ss').format(parsedTime);
-                          print(formattedTime); //output 14:59:00
+                          //print(formattedTime); //output 14:59:00
                           //DateFormat() is from intl package, you can format the time on any pattern you need.
 
                           setState(() {
@@ -314,45 +324,6 @@ class _BookAppointmentState extends State<BookAppointment> {
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: Text(
                       "This time is for your preference. Actual appointment time will be given by the doctor"),
-                ),
-                SizedBox(height: 10),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  child: Form(
-                    key: _formDoctorKey,
-                    child: TextFormField(
-                      controller: doctor,
-                      onTap: () async {
-                        Navigator.push(
-                          context,
-                          // Create the SelectionScreen in the next step.
-                          MaterialPageRoute(
-                              builder: (context) => SelectDoctor()),
-                        );
-                        await getdoc();
-                      },
-                      decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.deepPurple),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        hintText: 'Doctor Name',
-                        contentPadding: EdgeInsets.all(20.0),
-                        fillColor: Colors.grey[200],
-                        filled: true,
-                      ),
-                      validator: (doctor) {
-                        if (doctor == null || doctor.isEmpty) {
-                          return 'Please select doctor';
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
                 ),
                 SizedBox(height: 10),
 
@@ -414,15 +385,55 @@ class _BookAppointmentState extends State<BookAppointment> {
 
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Form(
+                    key: _formDoctorKey,
+                    child: TextFormField(
+                      controller: doctor,
+                      onTap: () async {
+                        Navigator.push(
+                          context,
+                          // Create the SelectionScreen in the next step.
+                          MaterialPageRoute(
+                              builder: (context) => const SelectDoctor()),
+                        );
+                        doctor.text = doctorname;
+                      },
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.deepPurple),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        hintText: 'Doctor Name',
+                        contentPadding: EdgeInsets.all(20.0),
+                        fillColor: Colors.grey[200],
+                        filled: true,
+                      ),
+                      validator: (doctor) {
+                        if (doctor == null || doctor.isEmpty) {
+                          return 'Please select doctor';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: Text("Pet Details",
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(255, 19, 13, 200),
+                        color: Colors.deepPurple,
                       )),
                 ),
 
-                SizedBox(height: 10),
+                SizedBox(height: 25),
 
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),

@@ -1,1 +1,2 @@
-String s = "";
+String doctorid = "";
+String doctorname = "";

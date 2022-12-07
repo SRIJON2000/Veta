@@ -8,35 +8,44 @@ import 'package:veta/screens/doctor_dash.dart';
 
 // Getting users Table Data
 
-late String user_firstname = '', user_phoneNumber = '', user_lastname = '';
+late String user_firstname = '',
+    user_phoneNumber = '',
+    user_lastname = '',
+    user_email = '';
+late String doctor_firstname = '',
+    doctor_phoneNumber = '',
+    doctor_lastname = '',
+    doctor_email = '';
 
-Future getUser_info() async {
+Future getUser_info(email) async {
   await FirebaseFirestore.instance
       .collection('users')
-      .where('email', isEqualTo: user!.email)
+      .where('email', isEqualTo: email)
       .get()
       .then((QuerySnapshot results) {
     user_firstname = results.docs[0]['firstname'];
     user_phoneNumber = results.docs[0]['phoneNumber'];
-    user_lastname = results.docs[0].id;
+    user_lastname = results.docs[0]['lastname'];
   });
 }
 
-Future getDoctor_info() async {
+Future getDoctor_info(email) async {
   await FirebaseFirestore.instance
       .collection('doctors')
-      .where('email', isEqualTo: user!.email)
+      .where('email', isEqualTo: email)
       .get()
       .then((QuerySnapshot results) {
-    user_firstname = results.docs[0]['firstname'];
-    //user_phoneNumber = results.docs[0]['phoneNumber'];
-    user_lastname = results.docs[0]['lastname'];
+    doctor_firstname = results.docs[0]['firstname'];
+    doctor_phoneNumber = results.docs[0]['phoneNumber'];
+    doctor_lastname = results.docs[0]['lastname'];
+    //print(results.docs[0]['phoneNumber']);
   });
 }
 
 // Getting user type
 
-late String type = '';
+String type = '';
+String email = user!.email.toString();
 Future getUser_type() async {
   await FirebaseFirestore.instance
       .collection('userType')
@@ -44,6 +53,7 @@ Future getUser_type() async {
       .get()
       .then((results) {
     type = results.docs[0]['type'];
+    //email = user!.email.toString();
   });
 }
 
