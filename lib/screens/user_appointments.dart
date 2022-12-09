@@ -1,13 +1,11 @@
-// ignore_for_file: prefer_const_constructors, prefer_interpolation_to_compose_strings, no_leading_underscores_for_local_identifiers, unused_element, unused_local_variable, use_build_context_synchronously
+// ignore_for_file: prefer_const_constructors, prefer_interpolation_to_compose_strings, no_leading_underscores_for_local_identifiers, unused_element, unused_local_variable, use_build_context_synchronously, prefer_const_literals_to_create_immutables
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_phoenix/flutter_phoenix.dart';
-import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:veta/constants.dart';
+import 'package:veta/screens/agora_videocall.dart';
 import 'package:veta/screens/mobile_body.dart';
-import 'package:veta/screens/data_getter.dart';
 
 class UserAppointment extends StatefulWidget {
   const UserAppointment({super.key});
@@ -17,30 +15,6 @@ class UserAppointment extends StatefulWidget {
 }
 
 class _UserAppointmentState extends State<UserAppointment> {
-  // Future showpetdetails(pettype, height, weight, age, gender) async {
-  //   showDialog(
-  //     context: context,
-  //     builder: (context) {
-  //       return AlertDialog(
-  //           content: Container(
-  //               child: Column(
-  //         children: [
-  //           Text("Pet: " + pettype),
-  //           SizedBox(height: 10),
-  //           Text("Height: " + height),
-  //           SizedBox(height: 10),
-  //           Text("Weight: " + weight),
-  //           SizedBox(height: 10),
-  //           Text("Age: " + age),
-  //           SizedBox(height: 10),
-  //           Text("Gender: " + gender),
-  //           SizedBox(height: 10),
-  //         ],
-  //       )));
-  //     },
-  //   );
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -113,7 +87,7 @@ class _UserAppointmentState extends State<UserAppointment> {
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(255, 19, 13, 200),
+                        color: Colors.deepPurple,
                       )),
                 ),
                 Tab(
@@ -121,7 +95,7 @@ class _UserAppointmentState extends State<UserAppointment> {
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(255, 19, 13, 200),
+                        color: Colors.deepPurple,
                       )),
                 ),
                 Tab(
@@ -129,7 +103,7 @@ class _UserAppointmentState extends State<UserAppointment> {
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(255, 19, 13, 200),
+                        color: Colors.deepPurple,
                       )),
                 )
               ]),
@@ -157,32 +131,59 @@ class _UserAppointmentState extends State<UserAppointment> {
                               return Padding(
                                 padding: const EdgeInsets.all(12.0),
                                 child: Container(
-                                  height: 300,
+                                  height: 190,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(12),
-                                    color: Color.fromARGB(255, 62, 20, 211),
+                                    color: Colors.grey[900],
                                   ),
                                   child: Column(
                                     children: [
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          "Your prefer date: " +
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              "Your prefer date : ",
+                                              style: TextStyle(
+                                                color: Colors.yellowAccent,
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            Text(
                                               snap["date"].toString(),
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 24,
-                                          ),
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 14,
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          "Your prefer time: " + snap['time'],
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 24,
-                                          ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              "Your prefer time : ",
+                                              style: TextStyle(
+                                                color: Colors.yellowAccent,
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            Text(
+                                              snap['time'],
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 14,
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                       Padding(
@@ -209,17 +210,20 @@ class _UserAppointmentState extends State<UserAppointment> {
                                                                     height: 10),
                                                                 Text("Height: " +
                                                                     snap['height']
-                                                                        .toString()),
+                                                                        .toString() +
+                                                                    " feet"),
                                                                 SizedBox(
                                                                     height: 10),
                                                                 Text("Weight: " +
                                                                     snap['weight']
-                                                                        .toString()),
+                                                                        .toString() +
+                                                                    " kg"),
                                                                 SizedBox(
                                                                     height: 10),
                                                                 Text("Age: " +
                                                                     snap['age']
-                                                                        .toString()),
+                                                                        .toString() +
+                                                                    " years"),
                                                                 SizedBox(
                                                                     height: 10),
                                                                 Text("Gender: " +
@@ -241,29 +245,56 @@ class _UserAppointmentState extends State<UserAppointment> {
                                                 );
                                               },
                                               child: Center(
-                                                child: Text('Pet Details',
-                                                    style: TextStyle(
-                                                        fontSize: 24.0,
-                                                        color: Colors.white)),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: const [
+                                                    Image(
+                                                      image: AssetImage(
+                                                          'assets/images/details.png'),
+                                                      height: 22,
+                                                      width: 22,
+                                                    ),
+                                                    SizedBox(width: 5),
+                                                    Text('Pet Details',
+                                                        style: TextStyle(
+                                                            fontSize: 14.0,
+                                                            color:
+                                                                Colors.white)),
+                                                  ],
+                                                ),
                                               ))),
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          "Doctor Name: " + snap["doctorname"],
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 24,
-                                          ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Image(
+                                              image: AssetImage(
+                                                  'assets/images/veterinary.png'),
+                                              height: 22,
+                                              width: 22,
+                                            ),
+                                            SizedBox(width: 5),
+                                            Text(
+                                              snap["doctorname"],
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 14,
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                       if (snap["status"] == "Denied") ...[
                                         Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child: Text(
-                                            "This appointment request\nhas been denied\nby doctor",
+                                            "This appointment request has been denied by doctor",
                                             style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 24,
+                                              color: Colors.red,
+                                              fontSize: 12,
                                             ),
                                           ),
                                         ),
@@ -296,34 +327,69 @@ class _UserAppointmentState extends State<UserAppointment> {
                               return Padding(
                                 padding: const EdgeInsets.all(12.0),
                                 child: Container(
-                                  height: 300,
+                                  height: 200,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(12),
-                                    color: Color.fromARGB(255, 62, 20, 211),
+                                    color: Colors.grey[900],
                                   ),
                                   child: Column(
                                     children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          "Date: " +
-                                              snap["prefer_date"].toString(),
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 24,
+                                      SizedBox(height: 10),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Image(
+                                                  image: AssetImage(
+                                                      'assets/images/dateV.png'),
+                                                  height: 22,
+                                                  width: 22,
+                                                ),
+                                                SizedBox(width: 5),
+                                                Text(
+                                                  snap["prefer_date"]
+                                                      .toString(),
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 14,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          "Time: " + snap['prefer_time'],
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 24,
+                                          SizedBox(width: 20),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Image(
+                                                  image: AssetImage(
+                                                      'assets/images/timeV.png'),
+                                                  height: 22,
+                                                  width: 22,
+                                                ),
+                                                SizedBox(width: 5),
+                                                Text(
+                                                  snap['prefer_time'],
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 14,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                           ),
-                                        ),
+                                        ],
                                       ),
+                                      SizedBox(height: 5),
                                       Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child: GestureDetector(
@@ -348,17 +414,20 @@ class _UserAppointmentState extends State<UserAppointment> {
                                                                     height: 10),
                                                                 Text("Height: " +
                                                                     snap['height']
-                                                                        .toString()),
+                                                                        .toString() +
+                                                                    " feet"),
                                                                 SizedBox(
                                                                     height: 10),
                                                                 Text("Weight: " +
                                                                     snap['weight']
-                                                                        .toString()),
+                                                                        .toString() +
+                                                                    " kg"),
                                                                 SizedBox(
                                                                     height: 10),
                                                                 Text("Age: " +
                                                                     snap['age']
-                                                                        .toString()),
+                                                                        .toString() +
+                                                                    ' years'),
                                                                 SizedBox(
                                                                     height: 10),
                                                                 Text("Gender: " +
@@ -380,18 +449,71 @@ class _UserAppointmentState extends State<UserAppointment> {
                                                 );
                                               },
                                               child: Center(
-                                                child: Text('Pet Details',
-                                                    style: TextStyle(
-                                                        fontSize: 24.0,
-                                                        color: Colors.white)),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: const [
+                                                    Image(
+                                                      image: AssetImage(
+                                                          'assets/images/details.png'),
+                                                      height: 22,
+                                                      width: 22,
+                                                    ),
+                                                    SizedBox(width: 5),
+                                                    Text('Pet Details',
+                                                        style: TextStyle(
+                                                            fontSize: 14.0,
+                                                            color:
+                                                                Colors.white)),
+                                                  ],
+                                                ),
                                               ))),
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          "Doctor Name: " + snap["doctorname"],
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 24,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Image(
+                                              image: AssetImage(
+                                                  'assets/images/veterinary.png'),
+                                              height: 22,
+                                              width: 22,
+                                            ),
+                                            SizedBox(width: 5),
+                                            Text(
+                                              snap["doctorname"],
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 14,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.deepPurple,
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 40, vertical: 10),
+                                          ),
+                                          onPressed: () {
+                                            Navigator.push(
+                                              context,
+                                              // Create the SelectionScreen in the next step.
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const AgoraVideoCall()),
+                                            );
+                                          },
+                                          child: Text(
+                                            "Start Video Call",
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -423,34 +545,65 @@ class _UserAppointmentState extends State<UserAppointment> {
                               return Padding(
                                 padding: const EdgeInsets.all(12.0),
                                 child: Container(
-                                  height: 300,
+                                  height: 170,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(12),
-                                    color: Color.fromARGB(255, 62, 20, 211),
+                                    color: Colors.grey[900],
                                   ),
                                   child: Column(
                                     children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          "Date: " +
-                                              snap["prefer_date"].toString(),
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 24,
+                                      SizedBox(height: 10),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Row(
+                                              children: [
+                                                Image(
+                                                  image: AssetImage(
+                                                      'assets/images/dateV.png'),
+                                                  height: 22,
+                                                  width: 22,
+                                                ),
+                                                SizedBox(width: 5),
+                                                Text(
+                                                  snap["prefer_date"]
+                                                      .toString(),
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 14,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          "Time: " + snap['prefer_time'],
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 24,
+                                          SizedBox(width: 20),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Row(
+                                              children: [
+                                                Image(
+                                                  image: AssetImage(
+                                                      'assets/images/timeV.png'),
+                                                  height: 22,
+                                                  width: 22,
+                                                ),
+                                                SizedBox(width: 5),
+                                                Text(
+                                                  snap['prefer_time'],
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 14,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                           ),
-                                        ),
+                                        ],
                                       ),
+                                      SizedBox(height: 10),
                                       Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child: GestureDetector(
@@ -475,17 +628,20 @@ class _UserAppointmentState extends State<UserAppointment> {
                                                                     height: 10),
                                                                 Text("Height: " +
                                                                     snap['height']
-                                                                        .toString()),
+                                                                        .toString() +
+                                                                    " feet"),
                                                                 SizedBox(
                                                                     height: 10),
                                                                 Text("Weight: " +
                                                                     snap['weight']
-                                                                        .toString()),
+                                                                        .toString() +
+                                                                    " kg"),
                                                                 SizedBox(
                                                                     height: 10),
                                                                 Text("Age: " +
                                                                     snap['age']
-                                                                        .toString()),
+                                                                        .toString() +
+                                                                    " years"),
                                                                 SizedBox(
                                                                     height: 10),
                                                                 Text("Gender: " +
@@ -507,19 +663,46 @@ class _UserAppointmentState extends State<UserAppointment> {
                                                 );
                                               },
                                               child: Center(
-                                                child: Text('Pet Details',
-                                                    style: TextStyle(
-                                                        fontSize: 24.0,
-                                                        color: Colors.white)),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Image(
+                                                      image: AssetImage(
+                                                          'assets/images/details.png'),
+                                                      height: 20,
+                                                      width: 20,
+                                                    ),
+                                                    SizedBox(width: 5),
+                                                    Text('Pet Details',
+                                                        style: TextStyle(
+                                                            fontSize: 14.0,
+                                                            color:
+                                                                Colors.white)),
+                                                  ],
+                                                ),
                                               ))),
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          "Doctor Name: " + snap["doctorname"],
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 24,
-                                          ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Image(
+                                              image: AssetImage(
+                                                  'assets/images/veterinary.png'),
+                                              height: 20,
+                                              width: 20,
+                                            ),
+                                            SizedBox(width: 5),
+                                            Text(
+                                              snap["doctorname"],
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 14,
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ],

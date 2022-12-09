@@ -1,0 +1,372 @@
+@startuml
+set namespaceSeparator ::
+
+class "veta::firebase_options.dart::DefaultFirebaseOptions" {
+  {static} +FirebaseOptions web
+  {static} +FirebaseOptions android
+  {static} +FirebaseOptions ios
+  {static} +FirebaseOptions macos
+  {static} +FirebaseOptions currentPlatform
+}
+
+"veta::firebase_options.dart::DefaultFirebaseOptions" o-- "firebase_core_platform_interface::firebase_core_platform_interface.dart::FirebaseOptions"
+
+class "veta::main.dart::MyApp" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "veta::main.dart::MyApp"
+
+class "veta::screens::appointment_request.dart::AppointmentRequest" {
+  +State<AppointmentRequest> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "veta::screens::appointment_request.dart::AppointmentRequest"
+
+class "veta::screens::appointment_request.dart::_AppointmentRequestState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "veta::screens::appointment_request.dart::_AppointmentRequestState"
+
+class "veta::screens::auth_page.dart::AuthPage" {
+  +State<AuthPage> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "veta::screens::auth_page.dart::AuthPage"
+class "veta::screens::auth_page.dart::_AuthPageState" {
+  +bool showLoginPage
+  +void toggleScreens()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "veta::screens::auth_page.dart::_AuthPageState"   
+
+class "veta::screens::book_appointment.dart::BookAppointment" {
+  +State<BookAppointment> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "veta::screens::book_appointment.dart::BookAppointment"
+
+class "veta::screens::book_appointment.dart::_BookAppointmentState" {
+  +SessionManager session
+  +TextEditingController dateInput
+  +TextEditingController timeInput
+  +TextEditingController doctor
+  +TextEditingController breed
+  +TextEditingController height
+  +TextEditingController weight
+  +TextEditingController age
+  -GlobalKey<FormState> _formDateKey
+  -GlobalKey<FormState> _formTimeKey
+  -GlobalKey<FormState> _formPetKey
+  -GlobalKey<FormState> _formDoctorKey
+  -GlobalKey<FormState> _formEmergencyKey
+  -GlobalKey<FormState> _formBreedKey
+  -GlobalKey<FormState> _formHeightKey
+  -GlobalKey<FormState> _formWeightKey
+  -GlobalKey<FormState> _formAgeKey
+  -GlobalKey<FormState> _formGenderKey
+  +List<String> pet
+  +List<String> emergency
+  +List<String> gender
+  +String? selectedPet
+  +String? selectedEmergency
+  +String? selectedGender
+  +String userid
+  -DateTime _datetime
+  +Future<dynamic> getdoc()
+  +Future<dynamic> book()
+  +Future<dynamic> loadAppointmentRequest()
+  +Future<dynamic> getuserid()
+  -void _showDatePicker()
+  +void initState()
+  +Widget build()
+}
+
+"veta::screens::book_appointment.dart::_BookAppointmentState" o-- "flutter_session_manager::flutter_session_manager.dart::SessionManager"
+"veta::screens::book_appointment.dart::_BookAppointmentState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"veta::screens::book_appointment.dart::_BookAppointmentState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"flutter::src::widgets::framework.dart::State" <|-- "veta::screens::book_appointment.dart::_BookAppointmentState"
+
+class "veta::screens::check_login_status.dart::CheckLoginStatus" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "veta::screens::check_login_status.dart::CheckLoginStatus"
+
+class "veta::screens::dashboard_loader.dart::DashboardLoader" {
+  +Widget userScaffold
+  +Widget doctorScaffold
+  +Widget build()
+}
+
+"veta::screens::dashboard_loader.dart::DashboardLoader" o-- "flutter::src::widgets::framework.dart::Widget"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "veta::screens::dashboard_loader.dart::DashboardLoader"
+
+class "veta::screens::doctor_appointments.dart::DoctorAppointment" {
+  +State<DoctorAppointment> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "veta::screens::doctor_appointments.dart::DoctorAppointment"
+
+class "veta::screens::doctor_appointments.dart::_DoctorAppointmentState" {
+  +Future<dynamic> showpetdetails()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "veta::screens::doctor_appointments.dart::_DoctorAppointmentState"
+
+class "veta::screens::doctor_dash.dart::DoctorScaffold" {
+  +State<DoctorScaffold> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "veta::screens::doctor_dash.dart::DoctorScaffold"
+
+class "veta::screens::doctor_dash.dart::_DoctorScaffoldState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "veta::screens::doctor_dash.dart::_DoctorScaffoldState"
+
+class "veta::screens::doctor_details.dart::DoctorDetails" {
+  +State<DoctorDetails> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "veta::screens::doctor_details.dart::DoctorDetails"
+
+class "veta::screens::doctor_details.dart::_DoctorDetailsState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "veta::screens::doctor_details.dart::_DoctorDetailsState"
+
+class "veta::screens::doctor_notification.dart::DoctorNotification" {
+  +State<DoctorNotification> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "veta::screens::doctor_notification.dart::DoctorNotification"
+
+class "veta::screens::doctor_notification.dart::_DoctorNotificationState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "veta::screens::doctor_notification.dart::_DoctorNotificationState"
+
+class "veta::screens::forgot_pw_page.dart::ForgotPasswordPage" {
+  +State<ForgotPasswordPage> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "veta::screens::forgot_pw_page.dart::ForgotPasswordPage"
+
+class "veta::screens::forgot_pw_page.dart::_ForgotPasswordPageState" {
+  -TextEditingController _emailController
+  +void dispose()
+  +Future<dynamic> passwordReset()
+  +Widget build()
+}
+
+"veta::screens::forgot_pw_page.dart::_ForgotPasswordPageState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"flutter::src::widgets::framework.dart::State" <|-- "veta::screens::forgot_pw_page.dart::_ForgotPasswordPageState"
+
+class "veta::screens::mobile_body.dart::MobileScaffold" {
+  +State<MobileScaffold> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "veta::screens::mobile_body.dart::MobileScaffold"
+
+class "veta::screens::mobile_body.dart::_MobileScaffoldState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "veta::screens::mobile_body.dart::_MobileScaffoldState"
+
+class "veta::screens::notification_loader.dart::NotificationLoader" {
+  +Widget userNotification
+  +Widget doctorNotification
+  +Widget build()
+}
+
+"veta::screens::notification_loader.dart::NotificationLoader" o-- "flutter::src::widgets::framework.dart::Widget"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "veta::screens::notification_loader.dart::NotificationLoader"
+
+class "veta::screens::petcare_form.dart::PetCareForm" {
+  +State<PetCareForm> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "veta::screens::petcare_form.dart::PetCareForm"
+
+class "veta::screens::petcare_form.dart::_PetCareFormState" {
+  -Completer<GoogleMapController> _controllerGoogleMap
+  +GoogleMapController newGoogleMapController
+  -Set<Polyline> _polyLine
+  +Position? currentPosition
+  +Geolocator geolocator
+  +double bottomPaddingofMap
+  +LatLng destination
+  +LatLng source
+  +Set<Marker> markers
+  {static} -CameraPosition _kGooglePlex
+  +TextEditingController dateInput
+  +TextEditingController address
+  -GlobalKey<FormState> _formDateKey
+  -GlobalKey<FormState> _formAddressKey
+  -GlobalKey<FormState> _formPetKey
+  +List<String> pet
+  +String? selectedPet
+  +void locatePosition()
+  +Future<String> showGoogleAutoComplete()
+  +void drawPolyLine()
+  +void initState()
+  +Widget build()
+}
+
+"veta::screens::petcare_form.dart::_PetCareFormState" o-- "dart::async::Completer<GoogleMapController>"
+"veta::screens::petcare_form.dart::_PetCareFormState" o-- "google_maps_flutter::google_maps_flutter.dart::GoogleMapController"
+"veta::screens::petcare_form.dart::_PetCareFormState" o-- "geolocator_platform_interface::src::models::position.dart::Position"
+"veta::screens::petcare_form.dart::_PetCareFormState" o-- "geolocator::geolocator.dart::Geolocator"   
+"veta::screens::petcare_form.dart::_PetCareFormState" o-- "google_maps_flutter_platform_interface::src::types::location.dart::LatLng"
+"veta::screens::petcare_form.dart::_PetCareFormState" o-- "google_maps_flutter_platform_interface::src::types::camera.dart::CameraPosition"
+"veta::screens::petcare_form.dart::_PetCareFormState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"veta::screens::petcare_form.dart::_PetCareFormState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"flutter::src::widgets::framework.dart::State" <|-- "veta::screens::petcare_form.dart::_PetCareFormState"
+
+class "veta::screens::responsive_layout.dart::ResponsiveLayout" {
+  +Widget mobileBody
+  +Widget tabletBody
+  +Widget desktopBody
+  +Widget build()
+}
+
+"veta::screens::responsive_layout.dart::ResponsiveLayout" o-- "flutter::src::widgets::framework.dart::Widget"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "veta::screens::responsive_layout.dart::ResponsiveLayout"
+
+class "veta::screens::select_doctor.dart::SelectDoctor" {
+  +State<SelectDoctor> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "veta::screens::select_doctor.dart::SelectDoctor"
+
+class "veta::screens::select_doctor.dart::_SelectDoctorState" {
+  +SessionManager session
+  +Widget build()
+}
+
+"veta::screens::select_doctor.dart::_SelectDoctorState" o-- "flutter_session_manager::flutter_session_manager.dart::SessionManager"
+"flutter::src::widgets::framework.dart::State" <|-- "veta::screens::select_doctor.dart::_SelectDoctorState"
+
+class "veta::screens::signin_page.dart::SignInScreen" {
+  +void Function() showRegisterPage
+  +State<SignInScreen> createState()
+}
+
+"veta::screens::signin_page.dart::SignInScreen" o-- "dart::ui::void Function()"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "veta::screens::signin_page.dart::SignInScreen"
+
+class "veta::screens::signin_page.dart::_SignInScreenState" {
+  -TextEditingController _emailController
+  -TextEditingController _passwordController
+  -GlobalKey<FormState> _formEmailValidatorKey
+  -GlobalKey<FormState> _formPasswordValidatorKey
+  +Future<dynamic> signIn()
+  +void dispose()
+  +Widget build()
+}
+
+"veta::screens::signin_page.dart::_SignInScreenState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"veta::screens::signin_page.dart::_SignInScreenState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"flutter::src::widgets::framework.dart::State" <|-- "veta::screens::signin_page.dart::_SignInScreenState"
+
+class "veta::screens::signup_page.dart::RegisterPage" {
+  +void Function() showLoginPage
+  +State<RegisterPage> createState()
+}
+
+"veta::screens::signup_page.dart::RegisterPage" o-- "dart::ui::void Function()"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "veta::screens::signup_page.dart::RegisterPage"
+
+class "veta::screens::signup_page.dart::_RegisterPageState" {
+  -TextEditingController _emailController
+  -TextEditingController _passwordController
+  -TextEditingController _confirmPasswordController
+  -TextEditingController _fnameController
+  -TextEditingController _lnameController
+  -TextEditingController _phoneController
+  -TextEditingController _licenseNoController
+  -GlobalKey<FormState> _formEmailValidatorKey
+  -GlobalKey<FormState> _formPasswordValidatorKey
+  -GlobalKey<FormState> _formFnameValidatorKey
+  -GlobalKey<FormState> _formLnameValidatorKey
+  -GlobalKey<FormState> _formPhoneValidatorKey
+  -GlobalKey<FormState> _formTypeValidatorKey
+  -GlobalKey<FormState> _formLicenseNumberKey
+  -GlobalKey<FormState> _formSpecialityKey
+  +List<String> typeItems
+  +List<String> speciality
+  +String? selectedRegtype
+  +String? selectedSpeciality
+  +void dispose()
+  +Future<dynamic> signUp()
+  +Future<dynamic> addUserDetails()
+  +Future<dynamic> addDoctorDetails()
+  +bool passwordConfirmed()
+  +Future<dynamic> add_userType()
+  +Widget build()
+}
+
+"veta::screens::signup_page.dart::_RegisterPageState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"veta::screens::signup_page.dart::_RegisterPageState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"flutter::src::widgets::framework.dart::State" <|-- "veta::screens::signup_page.dart::_RegisterPageState"
+
+class "veta::screens::test.dart::UserAppointment" {
+  +State<UserAppointment> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "veta::screens::test.dart::UserAppointment"
+
+class "veta::screens::test.dart::_UserAppointmentState" {
+  +Future<dynamic> showpetdetails()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "veta::screens::test.dart::_UserAppointmentState" 
+
+class "veta::screens::user_appointments.dart::UserAppointment" {
+  +State<UserAppointment> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "veta::screens::user_appointments.dart::UserAppointment"
+
+class "veta::screens::user_appointments.dart::_UserAppointmentState" {
+  +Future<dynamic> showpetdetails()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "veta::screens::user_appointments.dart::_UserAppointmentState"
+
+class "veta::screens::user_notification.dart::UserNotification" {
+  +State<UserNotification> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "veta::screens::user_notification.dart::UserNotification"
+
+class "veta::screens::user_notification.dart::_UserNotificationState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "veta::screens::user_notification.dart::_UserNotificationState"
+
+class "veta::util::my_box.dart::MyBox" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "veta::util::my_box.dart::MyBox"        
+
+class "veta::util::my_tile.dart::MyTile" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "veta::util::my_tile.dart::MyTile"      
+
+
+@enduml

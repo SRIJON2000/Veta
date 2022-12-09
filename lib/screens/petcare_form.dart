@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:veta/constants.dart';
-import 'package:veta/util/my_box.dart';
-import 'package:veta/util/my_tile.dart';
+
 import 'dart:async';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';

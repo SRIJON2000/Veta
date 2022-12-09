@@ -1,10 +1,9 @@
 // ignore_for_file: prefer_const_constructors, prefer_interpolation_to_compose_strings
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:veta/constants.dart';
-import 'package:veta/screens/book_appointment.dart';
 import 'package:flutter_session_manager/flutter_session_manager.dart';
 import 'package:veta/screens/global.dart';
 
@@ -34,106 +33,156 @@ class _SelectDoctorState extends State<SelectDoctor> {
               return Center(child: CircularProgressIndicator());
             }
             return ListView(
+              physics: BouncingScrollPhysics(),
               children: snapshot.data!.docs.map((DocumentSnapshot snap) {
                 return Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: Container(
-                    height: 317,
+                    height: 170,
                     decoration: BoxDecoration(
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Colors.black54,
+                          blurRadius: 10.0,
+                        ),
+                      ],
                       borderRadius: BorderRadius.circular(12),
-                      color: Color.fromARGB(255, 62, 20, 211),
+                      color: Colors.grey[900],
                     ),
                     child: Column(
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            "Doctor Name: " +
-                                snap['firstname'].toString() +
-                                " " +
-                                snap['lastname'].toString(),
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 24,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Column(
+                              children: [
+                                SizedBox(height: 10),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    children: [
+                                      Image(
+                                        image: AssetImage(
+                                            'assets/images/veterinary.png'),
+                                        height: 22,
+                                        width: 22,
+                                      ),
+                                      SizedBox(width: 5),
+                                      Text(
+                                        snap['firstname'].toString() +
+                                            " " +
+                                            snap['lastname'].toString(),
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    children: [
+                                      Image(
+                                        image: AssetImage(
+                                            'assets/images/license.png'),
+                                        height: 22,
+                                        width: 22,
+                                      ),
+                                      SizedBox(width: 8),
+                                      Text(
+                                        snap['licenseNumber'].toString(),
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ),
-
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            "License Number: " +
-                                snap['licenseNumber'].toString(),
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 24,
+                            SizedBox(width: 15),
+                            Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: Row(
+                                    children: [
+                                      Image(
+                                        image: AssetImage(
+                                            'assets/images/phone-call.png'),
+                                        height: 20,
+                                        width: 20,
+                                      ),
+                                      SizedBox(width: 5),
+                                      GestureDetector(
+                                        onTap: (() async {
+                                          await FlutterPhoneDirectCaller
+                                              .callNumber(snap['phoneNumber']
+                                                  .toString());
+                                        }),
+                                        child: Text(
+                                          snap['phoneNumber'].toString(),
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    children: [
+                                      Image(
+                                        image: AssetImage(
+                                            'assets/images/badge.png'),
+                                        height: 22,
+                                        width: 22,
+                                      ),
+                                      SizedBox(width: 5),
+                                      Text(
+                                        snap['speciality'].toString(),
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
+                          ],
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            "Phone Number: " + snap['phoneNumber'].toString(),
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 24,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            "Speciality: " + snap['speciality'].toString(),
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 24,
-                            ),
-                          ),
-                        ),
-
                         Padding(
                           padding: const EdgeInsets.all(12.0),
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                                primary: Color.fromARGB(255, 152, 37,
-                                    37), //background color of button
-                                side: BorderSide(
-                                    width: 3,
-                                    color: Colors
-                                        .deepPurple), //border width and color
-                                elevation: 6, //elevation of button
-                                shape: RoundedRectangleBorder(
-                                    //to set border radius to button
-                                    borderRadius: BorderRadius.circular(10)),
-                                padding: EdgeInsets.all(
-                                    30) //content padding inside button
-                                ),
-                            onPressed: () async {
+                              backgroundColor: Colors.deepPurple,
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 40, vertical: 15),
+                            ),
+                            onPressed: () {
                               doctorid = snap['email'].toString();
                               doctorname = snap['firstname'].toString() +
                                   " " +
                                   snap['lastname'].toString();
                               Navigator.pop(context);
                             },
-                            child: Text("Select"),
+                            child: Text(
+                              "Select",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
                         ),
-
-                        // Divider(
-                        //   thickness: 3,
-                        //   color: Colors.black54,
-                        // ),
-                        // Padding(
-                        //   padding: const EdgeInsets.all(8.0),
-                        //   child: Text(
-                        //     "Status: " + snap['status'].toString(),
-                        //     style: TextStyle(
-                        //       color: Colors.white,
-                        //       fontSize: 14,
-                        //       backgroundColor: Colors.black54,
-                        //     ),
-                        //   ),
-                        // ),
                       ],
                     ),
                   ),

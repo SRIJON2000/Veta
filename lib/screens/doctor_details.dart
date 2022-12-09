@@ -1,12 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_interpolation_to_compose_strings
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:veta/constants.dart';
-//import 'package:veta/screens/DashboardPages/user_scaffold.dart';
-//import 'package:veta/screens/dataLoader_box.dart';
-import 'package:veta/screens/signin_page.dart';
 
 class DoctorDetails extends StatefulWidget {
   DoctorDetails({super.key});
@@ -37,83 +33,122 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                 return Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: Container(
-                    height: 217,
+                    height: 150,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
-                      color: Color.fromARGB(255, 62, 20, 211),
+                      color: Colors.grey[900],
                     ),
                     child: Column(
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            "Doctor Name: " +
-                                snap['firstname'].toString() +
-                                " " +
-                                snap['lastname'].toString(),
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 24,
+                        SizedBox(height: 15),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image(
+                                    image: AssetImage(
+                                        'assets/images/veterinary.png'),
+                                    height: 22,
+                                    width: 22,
+                                  ),
+                                  SizedBox(width: 5),
+                                  Text(
+                                    snap['firstname'].toString() +
+                                        " " +
+                                        snap['lastname'].toString(),
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ),
-
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            "License Number: " +
-                                snap['licenseNumber'].toString(),
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 24,
+                            SizedBox(width: 20),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image(
+                                    image:
+                                        AssetImage('assets/images/license.png'),
+                                    height: 22,
+                                    width: 22,
+                                  ),
+                                  SizedBox(width: 7),
+                                  Text(
+                                    snap['licenseNumber'].toString(),
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
+                          ],
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            "Phone Number: " + snap['phoneNumber'].toString(),
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 24,
+                        SizedBox(height: 15),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image(
+                                    image: AssetImage(
+                                        'assets/images/phone-call.png'),
+                                    height: 22,
+                                    width: 22,
+                                  ),
+                                  SizedBox(width: 5),
+                                  Text(
+                                    snap['phoneNumber'].toString(),
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            "Speciality: " + snap['speciality'].toString(),
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 24,
+                            SizedBox(width: 20),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image(
+                                        image: AssetImage(
+                                            'assets/images/badge.png'),
+                                        height: 22,
+                                        width: 22,
+                                      ),
+                                      SizedBox(width: 5),
+                                      Text(
+                                        snap['speciality'].toString(),
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
+                          ],
                         ),
-                        // Padding(
-                        //   padding: const EdgeInsets.all(8.0),
-                        //   child: Text(
-                        //     "Driver Phone: " + snap['driverPhoneNo'].toString(),
-                        //     style: TextStyle(
-                        //       color: Colors.white,
-                        //       fontSize: 14,
-                        //     ),
-                        //   ),
-                        // ),
-                        // Divider(
-                        //   thickness: 3,
-                        //   color: Colors.black54,
-                        // ),
-                        // Padding(
-                        //   padding: const EdgeInsets.all(8.0),
-                        //   child: Text(
-                        //     "Status: " + snap['status'].toString(),
-                        //     style: TextStyle(
-                        //       color: Colors.white,
-                        //       fontSize: 14,
-                        //       backgroundColor: Colors.black54,
-                        //     ),
-                        //   ),
-                        // ),
                       ],
                     ),
                   ),

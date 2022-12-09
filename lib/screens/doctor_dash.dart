@@ -4,8 +4,7 @@ import 'package:veta/screens/appointment_request.dart';
 import 'package:veta/screens/doctor_appointments.dart';
 import 'package:veta/screens/petcare_form.dart';
 import 'package:veta/screens/profile.dart';
-import 'package:veta/util/my_box.dart';
-import 'package:veta/util/my_tile.dart';
+
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:veta/screens/book_appointment.dart';

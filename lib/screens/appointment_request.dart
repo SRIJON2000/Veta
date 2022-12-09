@@ -1,13 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_interpolation_to_compose_strings
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_phoenix/flutter_phoenix.dart';
-import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:veta/constants.dart';
-import 'package:veta/screens/mobile_body.dart';
-import 'package:veta/screens/doctor_dash.dart';
 import 'package:intl/intl.dart';
 
 class AppointmentRequest extends StatefulWidget {

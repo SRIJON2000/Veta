@@ -1,18 +1,14 @@
-import 'package:flutter/cupertino.dart';
+// ignore_for_file: sized_box_for_whitespace, use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:veta/constants.dart';
 import 'package:veta/screens/user_appointments.dart';
-import 'package:veta/util/my_box.dart';
-import 'package:veta/util/my_tile.dart';
 import 'dart:async';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:veta/screens/select_doctor.dart';
-import 'package:veta/screens/mobile_body.dart';
-import 'package:flutter_session_manager/flutter_session_manager.dart';
 import 'package:veta/screens/global.dart';
 
 class BookAppointment extends StatefulWidget {
@@ -103,22 +99,23 @@ class _BookAppointmentState extends State<BookAppointment> {
             content: Container(
                 height: 200,
                 child: Column(children: [
-                  Text(
+                  const Text(
                     "Your Appointment Request Has Been Successfully Sent To The Doctor, Kindly check My Appointments For Further Update",
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        primary: Colors.deepPurple, //background color of button
-                        side: BorderSide(
+                        backgroundColor:
+                            Colors.deepPurple, //background color of button
+                        side: const BorderSide(
                             width: 3,
                             color: Colors.deepPurple), //border width and color
                         elevation: 6, //elevation of button
                         shape: RoundedRectangleBorder(
                             //to set border radius to button
                             borderRadius: BorderRadius.circular(30)),
-                        padding:
-                            EdgeInsets.all(30) //content padding inside button
+                        padding: const EdgeInsets.all(
+                            30) //content padding inside button
                         ),
                     onPressed: () {
                       Navigator.push(
@@ -127,7 +124,7 @@ class _BookAppointmentState extends State<BookAppointment> {
                             builder: (context) => const UserAppointment()),
                       );
                     },
-                    child: Text("Go to my appointments"),
+                    child: const Text("Go to my appointments"),
                   ),
                 ])));
       },
@@ -151,9 +148,8 @@ class _BookAppointmentState extends State<BookAppointment> {
         .where('email', isEqualTo: user!.email)
         .get()
         .then((QuerySnapshot results) async {
-      username = results.docs[0]["firstname"].toString() +
-          " " +
-          results.docs[0]["lastname"].toString();
+      username =
+          "${results.docs[0]["firstname"]} ${results.docs[0]["lastname"]}";
     });
   }
 
@@ -188,7 +184,7 @@ class _BookAppointmentState extends State<BookAppointment> {
     return Scaffold(
       backgroundColor: Colors.grey[300],
       appBar: AppBar(
-        title: Text("Appointment Booking"),
+        title: const Text("Appointment Booking"),
         backgroundColor: Colors.grey[900], //background color of app bar
       ),
       body: SafeArea(
@@ -204,17 +200,17 @@ class _BookAppointmentState extends State<BookAppointment> {
                     fontSize: 52,
                   ),
                 ),
-                SizedBox(height: 10),
-                Text(
+                const SizedBox(height: 10),
+                const Text(
                   'Book Your Appointments with your details!',
                   style: TextStyle(
                     fontSize: 20,
                   ),
                 ),
-                SizedBox(height: 25),
+                const SizedBox(height: 25),
 
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 25.0),
                   child: Text("Appointment Details",
                       style: TextStyle(
                         fontSize: 24,
@@ -222,27 +218,29 @@ class _BookAppointmentState extends State<BookAppointment> {
                         color: Colors.deepPurple,
                       )),
                 ),
-                SizedBox(height: 25),
+                const SizedBox(height: 15),
 
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: Form(
                     key: _formDateKey,
                     child: TextFormField(
+                      readOnly: true, // Add this to not show the keyboard Input
                       controller: dateInput,
                       onTap: _showDatePicker,
                       decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
+                          borderSide: const BorderSide(color: Colors.white),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.deepPurple),
+                          borderSide:
+                              const BorderSide(color: Colors.deepPurple),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         hintText: 'Appointment Date',
-                        prefixIcon: Icon(Icons.calendar_month),
-                        contentPadding: EdgeInsets.all(20.0),
+                        prefixIcon: const Icon(Icons.calendar_month),
+                        contentPadding: const EdgeInsets.all(12.0),
                         fillColor: Colors.grey[200],
                         filled: true,
                       ),
@@ -255,20 +253,26 @@ class _BookAppointmentState extends State<BookAppointment> {
                     ),
                   ),
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
 
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 25.0),
                   child: Text(
-                      "This date is for your preference. Actual appointment date will be given by the doctor"),
+                    "This date is for your preference. Actual appointment date will be given by the doctor",
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 9,
+                    ),
+                  ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
 
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: Form(
                     key: _formTimeKey,
                     child: TextFormField(
+                      readOnly: true,
                       controller: timeInput,
                       onTap: () async {
                         TimeOfDay? pickedTime = await showTimePicker(
@@ -297,16 +301,17 @@ class _BookAppointmentState extends State<BookAppointment> {
                       },
                       decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
+                          borderSide: const BorderSide(color: Colors.white),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.deepPurple),
+                          borderSide:
+                              const BorderSide(color: Colors.deepPurple),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         hintText: 'Appointment Time',
-                        prefixIcon: Icon(Icons.punch_clock),
-                        contentPadding: EdgeInsets.all(20.0),
+                        prefixIcon: const Icon(Icons.punch_clock),
+                        contentPadding: const EdgeInsets.all(12.0),
                         fillColor: Colors.grey[200],
                         filled: true,
                       ),
@@ -319,13 +324,18 @@ class _BookAppointmentState extends State<BookAppointment> {
                     ),
                   ),
                 ),
-                SizedBox(height: 5),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                const SizedBox(height: 5),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 25.0),
                   child: Text(
-                      "This time is for your preference. Actual appointment time will be given by the doctor"),
+                    "This time is for your preference. Actual appointment time will be given by the doctor",
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 9,
+                    ),
+                  ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
 
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -334,14 +344,15 @@ class _BookAppointmentState extends State<BookAppointment> {
                     child: DropdownButtonFormField2(
                       decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
+                          borderSide: const BorderSide(color: Colors.white),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.deepPurple),
+                          borderSide:
+                              const BorderSide(color: Colors.deepPurple),
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        contentPadding: EdgeInsets.all(20.0),
+                        contentPadding: const EdgeInsets.all(12.0),
                         hintText: 'Emergency or not',
                         fillColor: Colors.grey[200],
                         filled: true,
@@ -381,34 +392,38 @@ class _BookAppointmentState extends State<BookAppointment> {
                   ),
                 ),
 
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
 
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: Form(
                     key: _formDoctorKey,
                     child: TextFormField(
+                      readOnly: true,
                       controller: doctor,
                       onTap: () async {
-                        Navigator.push(
+                        await Navigator.push(
                           context,
                           // Create the SelectionScreen in the next step.
                           MaterialPageRoute(
                               builder: (context) => const SelectDoctor()),
                         );
-                        doctor.text = doctorname;
+                        setState(() {
+                          doctor.text = doctorname;
+                        });
                       },
                       decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
+                          borderSide: const BorderSide(color: Colors.white),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.deepPurple),
+                          borderSide:
+                              const BorderSide(color: Colors.deepPurple),
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        hintText: 'Doctor Name',
-                        contentPadding: EdgeInsets.all(20.0),
+                        hintText: 'Select Doctor',
+                        contentPadding: const EdgeInsets.all(12.0),
                         fillColor: Colors.grey[200],
                         filled: true,
                       ),
@@ -421,10 +436,10 @@ class _BookAppointmentState extends State<BookAppointment> {
                     ),
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
 
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 25.0),
                   child: Text("Pet Details",
                       style: TextStyle(
                         fontSize: 24,
@@ -433,7 +448,7 @@ class _BookAppointmentState extends State<BookAppointment> {
                       )),
                 ),
 
-                SizedBox(height: 25),
+                const SizedBox(height: 15),
 
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -442,14 +457,15 @@ class _BookAppointmentState extends State<BookAppointment> {
                     child: DropdownButtonFormField2(
                       decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
+                          borderSide: const BorderSide(color: Colors.white),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.deepPurple),
+                          borderSide:
+                              const BorderSide(color: Colors.deepPurple),
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        contentPadding: EdgeInsets.all(20.0),
+                        contentPadding: const EdgeInsets.all(12.0),
                         hintText: 'Select Pet',
                         fillColor: Colors.grey[200],
                         filled: true,
@@ -489,7 +505,7 @@ class _BookAppointmentState extends State<BookAppointment> {
                   ),
                 ),
 
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
 
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -499,15 +515,16 @@ class _BookAppointmentState extends State<BookAppointment> {
                       controller: breed,
                       decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
+                          borderSide: const BorderSide(color: Colors.white),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.deepPurple),
+                          borderSide:
+                              const BorderSide(color: Colors.deepPurple),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         hintText: 'Enter breed name',
-                        contentPadding: EdgeInsets.all(20.0),
+                        contentPadding: const EdgeInsets.all(12.0),
                         fillColor: Colors.grey[200],
                         filled: true,
                       ),
@@ -520,7 +537,7 @@ class _BookAppointmentState extends State<BookAppointment> {
                     ),
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
 
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -530,15 +547,16 @@ class _BookAppointmentState extends State<BookAppointment> {
                       controller: height,
                       decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
+                          borderSide: const BorderSide(color: Colors.white),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.deepPurple),
+                          borderSide:
+                              const BorderSide(color: Colors.deepPurple),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         hintText: 'Enter Height',
-                        contentPadding: EdgeInsets.all(20.0),
+                        contentPadding: const EdgeInsets.all(12.0),
                         fillColor: Colors.grey[200],
                         filled: true,
                       ),
@@ -551,7 +569,7 @@ class _BookAppointmentState extends State<BookAppointment> {
                     ),
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
 
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -561,15 +579,16 @@ class _BookAppointmentState extends State<BookAppointment> {
                       controller: weight,
                       decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
+                          borderSide: const BorderSide(color: Colors.white),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.deepPurple),
+                          borderSide:
+                              const BorderSide(color: Colors.deepPurple),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         hintText: 'Enter Weight',
-                        contentPadding: EdgeInsets.all(20.0),
+                        contentPadding: const EdgeInsets.all(12.0),
                         fillColor: Colors.grey[200],
                         filled: true,
                       ),
@@ -582,7 +601,7 @@ class _BookAppointmentState extends State<BookAppointment> {
                     ),
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
 
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -593,15 +612,16 @@ class _BookAppointmentState extends State<BookAppointment> {
                       controller: age,
                       decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
+                          borderSide: const BorderSide(color: Colors.white),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.deepPurple),
+                          borderSide:
+                              const BorderSide(color: Colors.deepPurple),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         hintText: 'Enter Age',
-                        contentPadding: EdgeInsets.all(20.0),
+                        contentPadding: const EdgeInsets.all(12.0),
                         fillColor: Colors.grey[200],
                         filled: true,
                       ),
@@ -615,7 +635,7 @@ class _BookAppointmentState extends State<BookAppointment> {
                     ),
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
 
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -624,14 +644,15 @@ class _BookAppointmentState extends State<BookAppointment> {
                     child: DropdownButtonFormField2(
                       decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
+                          borderSide: const BorderSide(color: Colors.white),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.deepPurple),
+                          borderSide:
+                              const BorderSide(color: Colors.deepPurple),
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        contentPadding: EdgeInsets.all(20.0),
+                        contentPadding: const EdgeInsets.all(12.0),
                         hintText: 'Select Gender',
                         fillColor: Colors.grey[200],
                         filled: true,
@@ -670,69 +691,19 @@ class _BookAppointmentState extends State<BookAppointment> {
                     ),
                   ),
                 ),
-                SizedBox(height: 10),
-
-                // Padding(
-                //   padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                //   child: Form(
-                //     key: _formDoctorKey,
-                //     child: DropdownButtonFormField2(
-                //       decoration: InputDecoration(
-                //         enabledBorder: OutlineInputBorder(
-                //           borderSide: BorderSide(color: Colors.white),
-                //           borderRadius: BorderRadius.circular(12),
-                //         ),
-                //         focusedBorder: OutlineInputBorder(
-                //           borderSide: BorderSide(color: Colors.deepPurple),
-                //           borderRadius: BorderRadius.circular(12),
-                //         ),
-                //         contentPadding: EdgeInsets.all(20.0),
-                //         hintText: 'Select Doctor',
-                //         fillColor: Colors.grey[200],
-                //         filled: true,
-                //       ),
-                //       icon: const Icon(
-                //         Icons.arrow_drop_down,
-                //         color: Colors.black45,
-                //       ),
-                //       buttonPadding: const EdgeInsets.only(left: 20, right: 10),
-                //       dropdownDecoration: BoxDecoration(
-                //         borderRadius: BorderRadius.circular(15),
-                //       ),
-                //       items: doctors
-                //           .map((item) => DropdownMenuItem<String>(
-                //                 value: item,
-                //                 child: Text(
-                //                   item,
-                //                 ),
-                //               ))
-                //           .toList(),
-                //       onChanged: (value) {
-                //         // Do Smoething here
-                //         setState(() {
-                //           selectedDoctor = value.toString();
-                //         });
-                //       },
-                //       onSaved: (value) {
-                //         selectedDoctor = value.toString();
-                //       },
-                //     ),
-                //   ),
-                // ),
-
-                SizedBox(height: 10),
+                const SizedBox(height: 20),
 
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  child: GestureDetector(
+                  child: InkWell(
                     onTap: book,
-                    child: Container(
-                      padding: EdgeInsets.all(20),
+                    child: Ink(
+                      padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
                         color: Colors.deepPurple,
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      child: Center(
+                      child: const Center(
                         child: Text(
                           'Book Appointment',
                           style: TextStyle(
@@ -745,21 +716,21 @@ class _BookAppointmentState extends State<BookAppointment> {
                     ),
                   ),
                 ),
-                SizedBox(height: 25),
+                const SizedBox(height: 10),
 
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  child: GestureDetector(
+                  child: InkWell(
                     onTap: () {
                       Navigator.pop(context);
                     },
-                    child: Container(
-                      padding: EdgeInsets.all(20),
+                    child: Ink(
+                      padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
                         color: Colors.deepPurple,
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      child: Center(
+                      child: const Center(
                         child: Text(
                           'Cancel',
                           style: TextStyle(
@@ -772,7 +743,7 @@ class _BookAppointmentState extends State<BookAppointment> {
                     ),
                   ),
                 ),
-                SizedBox(height: 25),
+                const SizedBox(height: 25),
               ],
             ),
           ),
