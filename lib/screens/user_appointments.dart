@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:veta/constants.dart';
-import 'package:veta/screens/agora_videocall.dart';
+import 'package:veta/screens/agora_call.dart';
 import 'package:veta/screens/mobile_body.dart';
 
 class UserAppointment extends StatefulWidget {
@@ -505,7 +505,7 @@ class _UserAppointmentState extends State<UserAppointment> {
                                               // Create the SelectionScreen in the next step.
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      const AgoraVideoCall()),
+                                                      const AgoraCall()),
                                             );
                                           },
                                           child: Text(
