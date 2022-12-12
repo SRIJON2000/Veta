@@ -119,7 +119,7 @@ class _UserAppointmentState extends State<UserAppointment> {
                             .where('useremail', isEqualTo: user!.email)
                             .where('status', whereIn: ["Pending", "Denied"])
                             //.where('status', isEqualTo: "Denied")
-                            // .orderBy('date', descending: true)
+                            //.orderBy('date', descending: true)
                             .snapshots(),
                         builder: (BuildContext context,
                             AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -335,7 +335,7 @@ class _UserAppointmentState extends State<UserAppointment> {
                             .collection('requests')
                             .where('useremail', isEqualTo: user!.email)
                             .where('status', isEqualTo: "Upcoming")
-                            //.orderBy('date', descending: true)
+                            //.orderBy('prefer_date', descending: true)
                             .snapshots(),
                         builder: (BuildContext context,
                             AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -553,7 +553,7 @@ class _UserAppointmentState extends State<UserAppointment> {
                             .collection('requests')
                             .where('useremail', isEqualTo: user!.email)
                             .where('status', isEqualTo: "Completed")
-                            //.orderBy('date', descending: true)
+                            //.orderBy('prefer_date', descending: true)
                             .snapshots(),
                         builder: (BuildContext context,
                             AsyncSnapshot<QuerySnapshot> snapshot) {
