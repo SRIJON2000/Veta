@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:veta/constants.dart';
@@ -26,6 +27,28 @@ class DoctorScaffold extends StatefulWidget {
 }
 
 class _DoctorScaffoldState extends State<DoctorScaffold> {
+  Future onlogin() async {
+    await FirebaseFirestore.instance
+        .collection('doctors')
+        .where('email', isEqualTo: user!.email)
+        .get()
+        .then((QuerySnapshot results) async {
+      //doctor_firstname = results.docs[0]['firstname'];
+      await FirebaseFirestore.instance
+          .collection('doctors')
+          .doc(results.docs[0].id)
+          .update({
+        "isLoggedin": "Online",
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    onlogin();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -110,6 +133,19 @@ class _DoctorScaffoldState extends State<DoctorScaffold> {
                 style: drawerTextColor,
               ),
               onTap: () async {
+                await FirebaseFirestore.instance
+                    .collection('doctors')
+                    .where('email', isEqualTo: user!.email)
+                    .get()
+                    .then((QuerySnapshot results) async {
+                  //doctor_firstname = results.docs[0]['firstname'];
+                  await FirebaseFirestore.instance
+                      .collection('doctors')
+                      .doc(results.docs[0].id)
+                      .update({
+                    "isLoggedin": "Offline",
+                  });
+                });
                 await FirebaseAuth.instance.signOut();
                 Phoenix.rebirth(context);
               },

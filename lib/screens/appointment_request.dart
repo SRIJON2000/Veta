@@ -114,6 +114,18 @@ class _AppointmentRequestState extends State<AppointmentRequest> {
                                       style: TextStyle(
                                           fontSize: 18.0, color: Colors.white)),
                                 ))),
+                        if (snap["emegency"] == "Yes") ...[
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              "This is an emergency request",
+                              style: TextStyle(
+                                color: Colors.red,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ),
+                        ],
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: ElevatedButton(

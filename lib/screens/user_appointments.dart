@@ -7,6 +7,7 @@ import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:veta/constants.dart';
 import 'package:veta/screens/agora_call.dart';
 import 'package:veta/screens/mobile_body.dart';
+import 'package:veta/screens/view_prescription.dart';
 
 class UserAppointment extends StatefulWidget {
   const UserAppointment({super.key});
@@ -118,7 +119,7 @@ class _UserAppointmentState extends State<UserAppointment> {
                             .where('useremail', isEqualTo: user!.email)
                             .where('status', whereIn: ["Pending", "Denied"])
                             //.where('status', isEqualTo: "Denied")
-                            //.orderBy('date', descending: true)
+                            // .orderBy('date', descending: true)
                             .snapshots(),
                         builder: (BuildContext context,
                             AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -131,7 +132,7 @@ class _UserAppointmentState extends State<UserAppointment> {
                               return Padding(
                                 padding: const EdgeInsets.all(12.0),
                                 child: Container(
-                                  height: 190,
+                                  height: 250,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(12),
                                     color: Colors.grey[900],
@@ -294,7 +295,27 @@ class _UserAppointmentState extends State<UserAppointment> {
                                             "This appointment request has been denied by doctor",
                                             style: TextStyle(
                                               color: Colors.red,
+                                              fontWeight: FontWeight.bold,
                                               fontSize: 12,
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(10.0),
+                                          child: ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor:
+                                                  Colors.deepPurple,
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 40, vertical: 10),
+                                            ),
+                                            onPressed: () {},
+                                            child: Text(
+                                              "Get Refund",
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold,
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -500,13 +521,13 @@ class _UserAppointmentState extends State<UserAppointment> {
                                                 horizontal: 40, vertical: 10),
                                           ),
                                           onPressed: () {
-                                            Navigator.push(
-                                              context,
-                                              // Create the SelectionScreen in the next step.
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const AgoraCall()),
-                                            );
+                                            // Navigator.push(
+                                            //   context,
+                                            //   // Create the SelectionScreen in the next step.
+                                            //   MaterialPageRoute(
+                                            //       builder: (context) =>
+                                            //           const AgoraCall()),
+                                            // );
                                           },
                                           child: Text(
                                             "Start Video Call",
@@ -545,7 +566,7 @@ class _UserAppointmentState extends State<UserAppointment> {
                               return Padding(
                                 padding: const EdgeInsets.all(12.0),
                                 child: Container(
-                                  height: 170,
+                                  height: 200,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(12),
                                     color: Colors.grey[900],
@@ -703,6 +724,36 @@ class _UserAppointmentState extends State<UserAppointment> {
                                               ),
                                             ),
                                           ],
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.deepPurple,
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 40, vertical: 10),
+                                          ),
+                                          onPressed: () {
+                                            Navigator.push(
+                                              context,
+                                              // Create the SelectionScreen in the next step.
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      PrescriptionView(
+                                                          appointmentid:
+                                                              snap.id,
+                                                          dname: snap[
+                                                              "doctorname"])),
+                                            );
+                                          },
+                                          child: Text(
+                                            "See Prescription",
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     ],

@@ -38,7 +38,7 @@ class _SelectDoctorState extends State<SelectDoctor> {
                 return Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: Container(
-                    height: 170,
+                    height: 200,
                     decoration: BoxDecoration(
                       boxShadow: const [
                         BoxShadow(
@@ -155,9 +155,39 @@ class _SelectDoctorState extends State<SelectDoctor> {
                                     ],
                                   ),
                                 ),
+                                SizedBox(height: 5),
                               ],
                             ),
                           ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Current Status: ",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                  SizedBox(width: 5),
+                                  Text(
+                                    snap['isLoggedin'].toString(),
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(12.0),

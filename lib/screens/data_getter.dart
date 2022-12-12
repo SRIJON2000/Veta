@@ -8,6 +8,8 @@ import 'package:veta/screens/doctor_dash.dart';
 
 // Getting users Table Data
 
+late String medicine = '';
+late String instruction = '';
 late String user_firstname = '',
     user_phoneNumber = '',
     user_lastname = '',
