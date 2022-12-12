@@ -96,7 +96,7 @@ class _DoctorAppointmentState extends State<DoctorAppointment> {
                 ),
                 onTap: () async {
                   await FirebaseAuth.instance.signOut();
-                  //Phoenix.rebirth(context);
+                  Phoenix.rebirth(context);
                 },
               ),
             )

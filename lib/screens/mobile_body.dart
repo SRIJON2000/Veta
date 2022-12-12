@@ -1,6 +1,7 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:veta/constants.dart';
 
 import 'package:veta/screens/profile.dart';
@@ -105,7 +106,7 @@ class _MobileScaffoldState extends State<MobileScaffold> {
               ),
               onTap: () async {
                 await FirebaseAuth.instance.signOut();
-                //Phoenix.rebirth(context);
+                Phoenix.rebirth(context);
               },
             ),
           )

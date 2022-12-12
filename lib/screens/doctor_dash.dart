@@ -1,4 +1,7 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:veta/constants.dart';
 import 'package:veta/screens/appointment_request.dart';
 import 'package:veta/screens/doctor_appointments.dart';
@@ -108,7 +111,7 @@ class _DoctorScaffoldState extends State<DoctorScaffold> {
               ),
               onTap: () async {
                 await FirebaseAuth.instance.signOut();
-                //Phoenix.rebirth(context);
+                Phoenix.rebirth(context);
               },
             ),
           )

@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:veta/constants.dart';
 import 'package:veta/screens/agora_call.dart';
 import 'package:veta/screens/mobile_body.dart';
@@ -27,7 +28,6 @@ class _UserAppointmentState extends State<UserAppointment> {
               child:
                   ImageIcon(AssetImage('./assets/images/logo.png'), size: 160),
             ),
-            //child: ImageIcon(AssetImage('assets/images/logo.png'), size: 160)),
             Padding(
               padding: tilePadding,
               child: ListTile(
@@ -70,7 +70,7 @@ class _UserAppointmentState extends State<UserAppointment> {
                 ),
                 onTap: () async {
                   await FirebaseAuth.instance.signOut();
-                  //Phoenix.rebirth(context);
+                  Phoenix.rebirth(context);
                 },
               ),
             )
