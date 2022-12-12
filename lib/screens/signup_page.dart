@@ -6,6 +6,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:veta/screens/class.dart';
 
 class RegisterPage extends StatefulWidget {
   final VoidCallback showLoginPage;
@@ -80,35 +81,27 @@ class _RegisterPageState extends State<RegisterPage> {
 
         // Add User Details
         if (selectedRegtype == "User") {
-          addUserDetails();
+          Customer customer = Customer(
+              _emailController.text,
+              _fnameController.text,
+              _lnameController.text,
+              _phoneController.text);
+          customer.Signup();
         } else {
           // Add Driver Details
-          addDoctorDetails();
+          Doctor doctor = Doctor(
+            _emailController.text,
+            _fnameController.text,
+            _lnameController.text,
+            _phoneController.text,
+            "Online",
+            _licenseNoController.text,
+            selectedSpeciality.toString(),
+          );
+          doctor.Signup();
         }
       }
     }
-  }
-
-  // Depending on the Registration Type Add data to User or Driver Database in Firebase
-
-  Future addUserDetails() async {
-    await FirebaseFirestore.instance.collection('users').add({
-      'email': _emailController.text.trim(),
-      'firstname': _fnameController.text.trim(),
-      'lastname': _lnameController.text.trim(),
-      'phoneNumber': _phoneController.text.trim(),
-    });
-  }
-
-  Future addDoctorDetails() async {
-    await FirebaseFirestore.instance.collection('doctors').add({
-      'email': _emailController.text.trim(),
-      'firstname': _fnameController.text.trim(),
-      'lastname': _lnameController.text.trim(),
-      'phoneNumber': _phoneController.text.trim(),
-      'licenseNumber': _licenseNoController.text.trim(),
-      'speciality': selectedSpeciality,
-    });
   }
 
   bool passwordConfirmed() {

@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:veta/constants.dart';
+import 'package:veta/screens/class.dart';
 import 'package:veta/screens/petcare_form.dart';
 
 import 'package:veta/screens/profile.dart';
@@ -22,6 +23,12 @@ class MobileScaffold extends StatefulWidget {
 }
 
 class _MobileScaffoldState extends State<MobileScaffold> {
+  @override
+  void initState() {
+    global_customer.getCustomerDetails();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:veta/constants.dart';
+import 'package:veta/screens/class.dart';
 import 'package:veta/screens/user_appointments.dart';
 import 'dart:async';
 import 'package:google_fonts/google_fonts.dart';
@@ -69,7 +70,60 @@ class _BookAppointmentState extends State<BookAppointment> {
         _formAgeKey.currentState!.validate() &&
         _formGenderKey.currentState!.validate() &&
         _formBreedKey.currentState!.validate()) {
-      loadAppointmentRequest();
+      Pet pet = Pet(selectedPet.toString(), breed.text, height.text,
+          weight.text, age.text, selectedGender.toString());
+      Appointment appointment = Appointment(
+          pet,
+          "${_datetime.day} / ${_datetime.month} / ${_datetime.year}",
+          timeInput.text,
+          "null",
+          "null",
+          doctorid,
+          doctorname,
+          global_customer.email.toString(),
+          global_customer.firstname + " " + global_customer.lastname,
+          selectedEmergency.toString(),
+          "Pending");
+      global_customer.bookappointment(appointment);
+      // loadAppointmentRequest();
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+              content: Container(
+                  height: 200,
+                  child: Column(children: [
+                    const Text(
+                      "Your Appointment Request Has Been Successfully Sent To The Doctor, Kindly check My Appointments For Further Update",
+                    ),
+                    const SizedBox(height: 10),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              Colors.deepPurple, //background color of button
+                          side: const BorderSide(
+                              width: 3,
+                              color:
+                                  Colors.deepPurple), //border width and color
+                          elevation: 6, //elevation of button
+                          shape: RoundedRectangleBorder(
+                              //to set border radius to button
+                              borderRadius: BorderRadius.circular(30)),
+                          padding: const EdgeInsets.all(
+                              30) //content padding inside button
+                          ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const UserAppointment()),
+                        );
+                      },
+                      child: const Text("Go to my appointments"),
+                    ),
+                  ])));
+        },
+      );
     }
   }
 

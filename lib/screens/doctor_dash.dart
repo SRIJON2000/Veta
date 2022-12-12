@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:veta/constants.dart';
 import 'package:veta/screens/appointment_request.dart';
+import 'package:veta/screens/class.dart';
 import 'package:veta/screens/doctor_appointments.dart';
 import 'package:veta/screens/petcare_form.dart';
 import 'package:veta/screens/profile.dart';
@@ -46,6 +47,7 @@ class _DoctorScaffoldState extends State<DoctorScaffold> {
   @override
   void initState() {
     onlogin();
+    global_doctor.getDoctorDetails();
     super.initState();
   }
 
