@@ -1,13 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:veta/constants.dart';
 
-class Member {}
-
-class Customer {
+class Member {
   String email = "";
   String firstname = "";
   String lastname = "";
   String phoneNumber = "";
+}
+
+class Customer extends Member {
   Customer(
       String email, String firstname, String lastname, String phoneNumber) {
     this.email = email;
@@ -45,11 +46,7 @@ class Customer {
   void bookpetcare() {}
 }
 
-class Doctor {
-  String email = "";
-  String firstname = "";
-  String lastname = "";
-  String phoneNumber = "";
+class Doctor extends Member {
   String isLoggedin = "";
   String licenseNumber = "";
   String speciality = "";

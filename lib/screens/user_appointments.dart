@@ -521,13 +521,13 @@ class _UserAppointmentState extends State<UserAppointment> {
                                                 horizontal: 40, vertical: 10),
                                           ),
                                           onPressed: () {
-                                            // Navigator.push(
-                                            //   context,
-                                            //   // Create the SelectionScreen in the next step.
-                                            //   MaterialPageRoute(
-                                            //       builder: (context) =>
-                                            //           const AgoraCall()),
-                                            // );
+                                            Navigator.push(
+                                              context,
+                                              // Create the SelectionScreen in the next step.
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const AgoraCall()),
+                                            );
                                           },
                                           child: Text(
                                             "Start Video Call",

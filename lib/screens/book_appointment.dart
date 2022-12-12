@@ -346,11 +346,11 @@ class _BookAppointmentState extends State<BookAppointment> {
                           //DateFormat() is from intl package, you can format the time on any pattern you need.
 
                           setState(() {
-                            timeInput.text =
-                                formattedTime; //set the value of text field.
+                            timeInput.text = formattedTime
+                                .toString(); //set the value of text field.
                           });
                         } else {
-                          print("Time is not selected");
+                          //print("Time is not selected");
                         }
                       },
                       decoration: InputDecoration(
