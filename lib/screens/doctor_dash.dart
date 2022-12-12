@@ -75,10 +75,10 @@ class _DoctorScaffoldState extends State<DoctorScaffold> {
           ),
           IconButton(
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (BuildContext context) {
-                return ProfilePage();
-              }));
+              // Navigator.push(context,
+              //     MaterialPageRoute(builder: (BuildContext context) {
+              //   return ProfilePage();
+              // }));
             },
             icon: const Icon(Icons.person),
           ),
@@ -205,6 +205,65 @@ class _DoctorScaffoldState extends State<DoctorScaffold> {
                       children: [
                         Text(
                           "Check Your Appointment Requests",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.white54,
+                            fontSize: 10,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            child: InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => DoctorAppointment()),
+                );
+              },
+              child: Ink(
+                decoration: BoxDecoration(
+                  color: Colors.grey[900],
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      "assets/images/medicalAppointment.png",
+                      height: 50,
+                      width: 50,
+                    ),
+                    SizedBox(height: 15),
+                    Text(
+                      "My",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                      ),
+                    ),
+                    Text(
+                      "Appointments",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Wrap(
+                      alignment: WrapAlignment.center,
+                      direction: Axis.horizontal,
+                      children: [
+                        Text(
+                          "My Appointments",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.white54,

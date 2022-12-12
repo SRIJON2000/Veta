@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:veta/constants.dart';
+import 'package:veta/screens/petcare_form.dart';
 
 import 'package:veta/screens/profile.dart';
 import 'package:veta/screens/book_appointment.dart';
@@ -47,10 +48,10 @@ class _MobileScaffoldState extends State<MobileScaffold> {
           ),
           IconButton(
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (BuildContext context) {
-                return ProfilePage();
-              }));
+              // Navigator.push(context,
+              //     MaterialPageRoute(builder: (BuildContext context) {
+              //   return ProfilePage();
+              // }));
             },
             icon: const Icon(Icons.person),
           ),
@@ -278,7 +279,12 @@ class _MobileScaffoldState extends State<MobileScaffold> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             child: InkWell(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PetCareForm()),
+                );
+              },
               child: Ink(
                 decoration: BoxDecoration(
                   color: Colors.grey[900],

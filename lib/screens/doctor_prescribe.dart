@@ -198,7 +198,7 @@ class _DoctorPrescribeState extends State<DoctorPrescribe> {
                       ),
                       child: Center(
                         child: Text(
-                          'Book PetCare',
+                          'Prescribe',
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,

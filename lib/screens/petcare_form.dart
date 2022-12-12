@@ -92,6 +92,7 @@ class _PetCareFormState extends State<PetCareForm> {
   final _formDateKey = GlobalKey<FormState>();
   final _formAddressKey = GlobalKey<FormState>();
   final _formPetKey = GlobalKey<FormState>();
+  final _formOptionKey = GlobalKey<FormState>();
 
   final List<String> pet = [
     'Dog',
@@ -102,8 +103,60 @@ class _PetCareFormState extends State<PetCareForm> {
     'Bird',
     'Goat'
   ];
+  final List<String> option = [
+    'Grooming',
+    'Training',
+  ];
 
   String? selectedPet;
+  String? selectedOption;
+
+  DateTime _datetime = DateTime.now();
+  void _showDatePicker() {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2030),
+    ).then((value) {
+      setState(() {
+        _datetime = value!;
+        dateInput.text = DateFormat('yyyy-MM-dd').format(_datetime);
+      });
+    });
+  }
+
+  Future book() async {
+    if (_formDateKey.currentState!.validate() &&
+        _formPetKey.currentState!.validate() &&
+        _formOptionKey.currentState!.validate()) {
+      loadSlotRequest();
+    }
+  }
+
+  Future loadSlotRequest() async {
+    await FirebaseFirestore.instance.collection('groomingsandtraining').add({
+      'useremail': user!.email,
+      'address': address.text.trim(),
+      'pet': selectedPet,
+      'option': selectedOption,
+      'date': "${_datetime.day} / ${_datetime.month} / ${_datetime.year}"
+    });
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+            content: Container(
+                height: 150,
+                child: Column(children: [
+                  Text(
+                    "Your booking request has been sent to our team. We will call you for furthus update",
+                  ),
+                ])));
+      },
+    );
+    //const Mobil
+  }
 
   @override
   void initState() {
@@ -117,7 +170,7 @@ class _PetCareFormState extends State<PetCareForm> {
     return Scaffold(
       backgroundColor: Colors.grey[300],
       appBar: AppBar(
-        title: Text("Petcare Booking"),
+        title: Text("Booking For Grooming and Training"),
         backgroundColor: Colors.black54, //background color of app bar
       ),
       body: SafeArea(
@@ -135,7 +188,7 @@ class _PetCareFormState extends State<PetCareForm> {
                 ),
                 SizedBox(height: 10),
                 Text(
-                  'Book Your Petcare with your details!',
+                  'Book Your Sllot with your details!',
                   style: TextStyle(
                     fontSize: 20,
                   ),
@@ -148,27 +201,7 @@ class _PetCareFormState extends State<PetCareForm> {
                     key: _formDateKey,
                     child: TextFormField(
                       controller: dateInput,
-                      onTap: () async {
-                        DateTime? pickedDate = await showDatePicker(
-                            context: context,
-                            initialDate: DateTime.now(),
-                            firstDate: DateTime(1950),
-                            //DateTime.now() - not to allow to choose before today.
-                            lastDate: DateTime(2100));
-
-                        if (pickedDate != null) {
-                          print(
-                              pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                          String formattedDate =
-                              DateFormat('yyyy-MM-dd').format(pickedDate);
-                          print(
-                              formattedDate); //formatted date output using intl package =>  2021-03-16
-                          setState(() {
-                            dateInput.text =
-                                formattedDate; //set output date to TextField value.
-                          });
-                        } else {}
-                      },
+                      onTap: _showDatePicker,
                       decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.white),
@@ -244,6 +277,55 @@ class _PetCareFormState extends State<PetCareForm> {
                 ),
 
                 SizedBox(height: 10),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Form(
+                    key: _formOptionKey,
+                    child: DropdownButtonFormField2(
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.deepPurple),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        contentPadding: EdgeInsets.all(20.0),
+                        hintText: 'Select Option',
+                        fillColor: Colors.grey[200],
+                        filled: true,
+                      ),
+                      icon: const Icon(
+                        Icons.arrow_drop_down,
+                        color: Colors.black45,
+                      ),
+                      buttonPadding: const EdgeInsets.only(left: 20, right: 10),
+                      dropdownDecoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      items: option
+                          .map((item) => DropdownMenuItem<String>(
+                                value: item,
+                                child: Text(
+                                  item,
+                                ),
+                              ))
+                          .toList(),
+                      onChanged: (value) {
+                        // Do Smoething here
+                        setState(() {
+                          selectedOption = value.toString();
+                        });
+                      },
+                      onSaved: (value) {
+                        selectedOption = value.toString();
+                      },
+                    ),
+                  ),
+                ),
+
+                SizedBox(height: 10),
 
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -290,40 +372,11 @@ class _PetCareFormState extends State<PetCareForm> {
                   ),
                 ),
 
-                // Padding(
-                //   padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                //   child: Form(
-                //     key: _formAddressKey,
-                //     child: TextFormField(
-                //       controller: address,
-                //       decoration: InputDecoration(
-                //         enabledBorder: OutlineInputBorder(
-                //           borderSide: BorderSide(color: Colors.white),
-                //           borderRadius: BorderRadius.circular(12),
-                //         ),
-                //         focusedBorder: OutlineInputBorder(
-                //           borderSide: BorderSide(color: Colors.deepPurple),
-                //           borderRadius: BorderRadius.circular(12),
-                //         ),
-                //         hintText: 'Enter Address',
-                //         contentPadding: EdgeInsets.all(20.0),
-                //         fillColor: Colors.grey[200],
-                //         filled: true,
-                //       ),
-                //       validator: (fname) {
-                //         if (fname == null || fname.isEmpty) {
-                //           return 'Please enter your Address';
-                //         }
-                //         return null;
-                //       },
-                //     ),
-                //   ),
-                // ),
                 SizedBox(height: 25),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: GestureDetector(
-                    onTap: null,
+                    onTap: book,
                     child: Container(
                       padding: EdgeInsets.all(20),
                       decoration: BoxDecoration(
@@ -332,7 +385,7 @@ class _PetCareFormState extends State<PetCareForm> {
                       ),
                       child: Center(
                         child: Text(
-                          'Book PetCare',
+                          'Book',
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,

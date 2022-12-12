@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:veta/constants.dart';
 import 'package:veta/widget/profile_widget.dart';
 import 'package:veta/screens/data_getter.dart';
 
@@ -13,16 +15,31 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   String doctorname = "";
   String username = "";
+  Future getUser_type() async {
+    await FirebaseFirestore.instance
+        .collection('userType')
+        .where('email', isEqualTo: user!.email)
+        .get()
+        .then((results) {
+      type = results.docs[0]['type'];
+      //email = user!.email.toString();
+    });
+  }
+
   @override
   void initState() {
+    type = "";
     getUser_type();
     if (type == "Doctor") {
       getDoctor_info(email.toString());
     } else {
       getUser_info(email.toString());
     }
-    doctorname = "Dr. $doctor_firstname $doctor_lastname";
-    username = "$user_firstname $user_lastname";
+    setState(() {
+      doctorname = "Dr. $doctor_firstname $doctor_lastname";
+      username = "$user_firstname $user_lastname";
+    });
+
     super.initState();
   }
 
@@ -41,7 +58,7 @@ class _ProfilePageState extends State<ProfilePage> {
           const SizedBox(height: 24),
           ProfileWidget(
             imagePath:
-                'https://images.unsplash.com/photo-1554151228-14d9def656e4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=333&q=80',
+                'https://www.google.com/imgres?imgurl=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F7%2F7e%2FCircle-icons-profile.svg%2F2048px-Circle-icons-profile.svg.png&imgrefurl=https%3A%2F%2Fen.m.wikipedia.org%2Fwiki%2FFile%3ACircle-icons-profile.svg&tbnid=J4bk_892RvNL_M&vet=12ahUKEwiG15Kd_vP7AhWviNgFHb8_CGkQMygEegUIARDmAQ..i&docid=TKW6teBKD3wYJM&w=2048&h=2048&q=profile&ved=2ahUKEwiG15Kd_vP7AhWviNgFHb8_CGkQMygEegUIARDmAQ',
             onClicked: () async {},
           ),
           const SizedBox(height: 24),
@@ -99,11 +116,10 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget NumbersWidget() => Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          buildButton(context, '4.8', 'Ranking'),
+          buildButton(context, '4.8', 'Rating'),
           buildDivider(),
-          buildButton(context, '35', 'Following'),
+          buildButton(context, '35', 'Appointments'),
           buildDivider(),
-          buildButton(context, '50', 'Followers'),
         ],
       );
   Widget buildDivider() => Container(

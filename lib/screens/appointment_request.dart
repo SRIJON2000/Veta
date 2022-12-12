@@ -6,7 +6,7 @@ import 'package:veta/constants.dart';
 import 'package:intl/intl.dart';
 
 class AppointmentRequest extends StatefulWidget {
-  AppointmentRequest({super.key});
+  const AppointmentRequest({super.key});
 
   @override
   State<AppointmentRequest> createState() => _AppointmentRequestState();
@@ -40,10 +40,10 @@ class _AppointmentRequestState extends State<AppointmentRequest> {
                 return Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: Container(
-                    height: 300,
+                    height: 380,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
-                      color: Color.fromARGB(255, 62, 20, 211),
+                      color: Colors.black,
                     ),
                     child: Column(
                       children: [
@@ -52,7 +52,8 @@ class _AppointmentRequestState extends State<AppointmentRequest> {
                           child: Text(
                             "Date requested: " + snap["date"].toString(),
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Colors.yellowAccent,
+                              fontWeight: FontWeight.bold,
                               fontSize: 18,
                             ),
                           ),
@@ -62,7 +63,8 @@ class _AppointmentRequestState extends State<AppointmentRequest> {
                           child: Text(
                             "Time requested: " + snap['time'],
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Colors.yellowAccent,
+                              fontWeight: FontWeight.bold,
                               fontSize: 18,
                             ),
                           ),
@@ -112,15 +114,18 @@ class _AppointmentRequestState extends State<AppointmentRequest> {
                                 child: Center(
                                   child: Text('Pet Details',
                                       style: TextStyle(
-                                          fontSize: 18.0, color: Colors.white)),
+                                          fontSize: 18.0,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white)),
                                 ))),
-                        if (snap["emegency"] == "Yes") ...[
+                        if (snap["emergency"] == "Yes") ...[
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
                               "This is an emergency request",
                               style: TextStyle(
                                 color: Colors.red,
+                                fontWeight: FontWeight.bold,
                                 fontSize: 20,
                               ),
                             ),
@@ -130,8 +135,8 @@ class _AppointmentRequestState extends State<AppointmentRequest> {
                           padding: const EdgeInsets.all(8.0),
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                                primary: Color.fromARGB(255, 152, 37,
-                                    37), //background color of button
+                                primary: Colors
+                                    .deepPurple, //background color of button
                                 side: BorderSide(
                                     width: 3,
                                     color: Colors
@@ -410,11 +415,12 @@ class _AppointmentRequestState extends State<AppointmentRequest> {
                         Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                      primary: Color.fromARGB(255, 152, 37,
-                                          37), //background color of button
+                                      primary: Colors
+                                          .deepPurple, //background color of button
                                       side: BorderSide(
                                           width: 3,
                                           color: Colors
@@ -451,11 +457,11 @@ class _AppointmentRequestState extends State<AppointmentRequest> {
                                   },
                                   child: Text("Approve"),
                                 ),
-                                SizedBox(height: 15),
+                                SizedBox(width: 10),
                                 ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                      primary: Color.fromARGB(255, 152, 37,
-                                          37), //background color of button
+                                      primary: Colors
+                                          .deepPurple, //background color of button
                                       side: BorderSide(
                                           width: 3,
                                           color: Colors
