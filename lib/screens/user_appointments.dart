@@ -86,7 +86,7 @@ class _UserAppointmentState extends State<UserAppointment> {
                 Tab(
                   child: Text("Pending",
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: Colors.deepPurple,
                       )),
@@ -94,7 +94,7 @@ class _UserAppointmentState extends State<UserAppointment> {
                 Tab(
                   child: Text("Upcoming",
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: Colors.deepPurple,
                       )),
@@ -102,7 +102,7 @@ class _UserAppointmentState extends State<UserAppointment> {
                 Tab(
                   child: Text("Completed",
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: Colors.deepPurple,
                       )),

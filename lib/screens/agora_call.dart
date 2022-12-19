@@ -16,7 +16,7 @@ class _AgoraCallState extends State<AgoraCall> {
           channelName: "vetaTest",
           username: '$user!.email',
           tempToken:
-              "007eJxTYPgudaeQb/rV/wk5ey6fXamuYVyo6nqiZwLXgRcqLZ9F6iYoMKSmpiWamBmbp1oYGpkkp1haWKakGKYZJpsaWSYampknntScltwQyMgwfQEXIyMDBIL4HAxlqSWJIanFJQwMACXAIcM="),
+              "007eJxTYPj5/twmTmtf69Idt3zEZx+dlSp9SThih2z5LYeWapuIBjMFhtTUtEQTM2PzVAtDI5PkFEsLy5QUwzTDZFMjy0RDM/PE7JbpyQ2BjAwtWmdZGBkgEMTnYChLLUkMSS0uYWAAAMLSIKo="),
       enabledPermission: [
         Permission.camera,
         Permission.microphone,

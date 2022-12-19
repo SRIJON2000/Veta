@@ -163,7 +163,7 @@ class _DoctorAppointmentState extends State<DoctorAppointment> {
                               return Padding(
                                 padding: const EdgeInsets.all(12.0),
                                 child: Container(
-                                  height: 250,
+                                  height: 280,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(12),
                                     color: Colors.grey[900],

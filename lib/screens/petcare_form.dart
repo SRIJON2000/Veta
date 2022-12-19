@@ -200,6 +200,7 @@ class _PetCareFormState extends State<PetCareForm> {
                   child: Form(
                     key: _formDateKey,
                     child: TextFormField(
+                      readOnly: true,
                       controller: dateInput,
                       onTap: _showDatePicker,
                       decoration: InputDecoration(

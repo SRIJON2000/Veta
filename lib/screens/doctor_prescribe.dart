@@ -177,11 +177,11 @@ class _DoctorPrescribeState extends State<DoctorPrescribe> {
 
                 SizedBox(height: 5),
                 Text(
-                  '          Note:- Once you submit prescription the appointment will be completed',
+                  '  Note:- Once you submit prescription the appointment will be completed',
                   style: TextStyle(
                     color: Colors.red,
                     fontWeight: FontWeight.bold,
-                    fontSize: 13,
+                    fontSize: 10,
                   ),
                 ),
                 SizedBox(height: 10),
